@@ -1,0 +1,31 @@
+# Node & Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Java & Backend
+**/target/
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# IDEs & System
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

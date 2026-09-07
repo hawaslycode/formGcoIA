@@ -1,0 +1,452 @@
+/* ================================================================== */
+/* AUTENTICACIÓN — SPLIT-SCREEN PREMIUM                                */
+/* ================================================================== */
+
+/* Layout raíz: dos columnas */
+.contenedor-autenticacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* ======================== PANEL IZQUIERDO ========================= */
+
+.panel-marca {
+  background: var(--gradiente-azul-alt);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 48px;
+  position: relative;
+  overflow: hidden;
+  animation: slideInLeft 0.6s ease both;
+}
+
+/* Círculos decorativos de fondo */
+.panel-marca::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  top: -120px;
+  right: -120px;
+}
+
+.panel-marca::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  bottom: -80px;
+  left: -80px;
+}
+
+/* Logo en panel izquierdo */
+.logo-panel-marca {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 40px;
+  filter: brightness(0) invert(1) drop-shadow(0 4px 16px rgba(0,0,0,0.3));
+  animation: flotar 4s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+/* Texto del panel izquierdo */
+.titulo-panel-marca {
+  font-family: var(--fuente-titulos);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.subtitulo-panel-marca {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  line-height: 1.6;
+  max-width: 300px;
+  margin-bottom: 44px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Grilla de marcas */
+.grid-marcas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 320px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.badge-marca {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radio-sm);
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  transition: background var(--transicion-normal), transform var(--transicion-rapida);
+  cursor: default;
+}
+
+.badge-marca:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Divisor decorativo */
+.divisor-panel {
+  width: 48px;
+  height: 3px;
+  background: var(--color-rojo-acento);
+  border-radius: var(--radio-full);
+  margin: 32px auto 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ======================== PANEL DERECHO — FORMULARIO ========================= */
+
+.panel-formulario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 40px;
+  background: #f8fafc;
+  animation: slideInRight 0.6s ease both;
+  overflow-y: auto;
+}
+
+.tarjeta-autenticacion {
+  background: var(--color-blanco);
+  padding: 44px 40px;
+  border-radius: var(--radio-xl);
+  box-shadow: var(--sombra-lg);
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Logo en tarjeta (mobile) */
+.contenedor-logo-auth {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.imagen-logo-auth {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Títulos */
+.titulo-autenticacion {
+  font-family: var(--fuente-titulos);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-azul-oscuro);
+  text-align: center;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.descripcion-autenticacion {
+  font-size: 0.875rem;
+  color: var(--color-gris-texto);
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ======================== INPUTS ========================= */
+
+.grupo-input {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.grupo-input label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 7px;
+  color: #374151;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.input-con-icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-con-icono .icono-input {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--color-gris-texto);
+  pointer-events: none;
+  z-index: 2;
+  transition: color var(--transicion-normal);
+}
+
+.grupo-input input,
+.grupo-input select {
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-gris-borde);
+  border-radius: var(--radio-sm);
+  font-size: 0.9rem;
+  font-family: var(--fuente-textos);
+  color: var(--color-negro);
+  background: #fdfdfd;
+  width: 100%;
+  transition: border-color var(--transicion-normal), box-shadow var(--transicion-normal), background var(--transicion-normal);
+  outline: none;
+}
+
+/* FIX CRÍTICO: Los inputs con ícono izquierdo deben tener padding-left suficiente para no sobreponer texto e icono */
+.input-con-icono input,
+.grupo-input .input-con-icono input {
+  padding-left: 44px !important;
+}
+
+.grupo-input input:focus,
+.grupo-input select:focus {
+  border-color: var(--color-azul-oscuro);
+  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.1);
+  background: #fff;
+}
+
+.grupo-input input:focus ~ .icono-input,
+.input-con-icono:focus-within .icono-input {
+  color: var(--color-azul-oscuro);
+}
+
+.grupo-input input::placeholder {
+  color: #b0b8c4;
+}
+
+/* Toggle contraseña */
+.boton-toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-gris-texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transicion-rapida);
+  z-index: 2;
+}
+
+.boton-toggle-password:hover {
+  color: var(--color-azul-oscuro);
+}
+
+/* Recuperar contraseña */
+.contenedor-recuperar-contrasena {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -10px;
+  margin-bottom: 18px;
+}
+
+.enlace-recuperar {
+  font-size: 0.8rem;
+  color: var(--color-azul-oscuro);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transicion-rapida);
+  text-decoration: none;
+}
+
+.enlace-recuperar:hover {
+  color: var(--color-rojo-acento);
+  text-decoration: underline;
+}
+
+/* ======================== CHECKBOX ========================= */
+
+.grupo-checkbox {
+  margin-bottom: 22px;
+}
+
+.etiqueta-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: #4b5563;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.etiqueta-checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 2px solid var(--color-gris-borde);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  transition: all var(--transicion-normal);
+  position: relative;
+  margin-top: 1px;
+}
+
+.etiqueta-checkbox input[type="checkbox"]:checked {
+  background: var(--color-azul-oscuro);
+  border-color: var(--color-azul-oscuro);
+}
+
+.etiqueta-checkbox input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+/* ======================== BOTÓN PRINCIPAL ========================= */
+
+.boton-principal-auth {
+  width: 100%;
+  padding: 14px;
+  background: var(--gradiente-azul);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: var(--radio-sm);
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  transition: opacity var(--transicion-normal), transform var(--transicion-rapida), box-shadow var(--transicion-normal);
+  box-shadow: var(--sombra-azul);
+  position: relative;
+  overflow: hidden;
+}
+
+.boton-principal-auth:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 36px rgba(10, 31, 68, 0.32);
+}
+
+.boton-principal-auth:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* ======================== ENLACE DE MODO ========================= */
+
+.enlace-cambio-modo {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-gris-texto);
+  margin-top: 22px;
+}
+
+.enlace-cambio-modo span {
+  color: var(--color-azul-oscuro);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color var(--transicion-rapida);
+}
+
+.enlace-cambio-modo span:hover {
+  color: var(--color-rojo-acento);
+}
+
+/* Separador visual */
+.separador-auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #c4c9d4;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+.separador-auth::before,
+.separador-auth::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-gris-borde);
+}
+
+/* ================================================================== */
+/* RESPONSIVE — MOBILE                                                 */
+/* ================================================================== */
+
+@media (max-width: 900px) {
+  .contenedor-autenticacion {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-marca {
+    display: none;
+  }
+
+  .panel-formulario {
+    padding: 32px 20px;
+    min-height: 100vh;
+    background: var(--color-gris-claro);
+  }
+
+  .tarjeta-autenticacion {
+    padding: 36px 28px;
+    box-shadow: var(--sombra-md);
+  }
+
+  /* En mobile sí mostramos el logo dentro de la tarjeta */
+  .contenedor-logo-auth {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .tarjeta-autenticacion {
+    padding: 28px 20px;
+    border-radius: var(--radio-lg);
+  }
+}
