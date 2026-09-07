@@ -3,6 +3,24 @@ import "./RegistroLealtad.css";
 import logoGco from "../assets/gcologo.png";
 import { fetchConAuth } from "../api/clienteApi";
 
+// Importación de logos oficiales de las marcas
+import logoAmericanino from "../assets/marcas/americanino.png";
+import logoAmericanEagle from "../assets/marcas/american-eagle.png";
+import logoChevignon from "../assets/marcas/chevignon.png";
+import logoEsprit from "../assets/marcas/esprit.png";
+import logoNafNaf from "../assets/marcas/naf-naf.png";
+import logoRifle from "../assets/marcas/rifle.png";
+
+/** Mapa de logos institucionales por ID de marca */
+const LOGOS_MARCAS = {
+  1: logoAmericanino,
+  2: logoAmericanEagle,
+  3: logoChevignon,
+  4: logoEsprit,
+  5: logoNafNaf,
+  6: logoRifle,
+};
+
 /**
  * Objeto con los beneficios exclusivos simulados por cada marca de GCO.
  */
@@ -34,7 +52,7 @@ const beneficiosPorMarcaSimulados = {
 };
 
 /* =================================================================== */
-/* COMPONENTES DE ÍCONOS SVG VECTORIALES (Sin emojis)                 */
+/* COMPONENTES DE ÍCONOS SVG VECTORIALES                             */
 /* =================================================================== */
 
 const IconoSalir = () => (
@@ -97,55 +115,6 @@ const IconoGuardar = () => (
     <polyline points="7 3 7 8 15 8"/>
   </svg>
 );
-
-/* Íconos representativos para cada una de las 6 marcas del grupo */
-const IconoMarcaAmericanino = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20.38 3.46L16 2a4 4 0 0 0-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
-  </svg>
-);
-
-const IconoMarcaAmericanEagle = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-  </svg>
-);
-
-const IconoMarcaChevignon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-  </svg>
-);
-
-const IconoMarcaEsprit = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </svg>
-);
-
-const IconoMarcaNafNaf = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M6 3h12l4 6-10 12L2 9z"/>
-  </svg>
-);
-
-const IconoMarcaRifle = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M6 2v20M18 2v20M6 12h12M6 6h12M6 18h12"/>
-  </svg>
-);
-
-const obtenerIconoMarca = (idMarca) => {
-  switch (Number(idMarca)) {
-    case 1: return <IconoMarcaAmericanino />;
-    case 2: return <IconoMarcaAmericanEagle />;
-    case 3: return <IconoMarcaChevignon />;
-    case 4: return <IconoMarcaEsprit />;
-    case 5: return <IconoMarcaNafNaf />;
-    case 6: return <IconoMarcaRifle />;
-    default: return <IconoEtiqueta />;
-  }
-};
 
 export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
   const [datosFormulario, establecerDatosFormulario] = useState({
@@ -647,37 +616,45 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
               <span className="numero-seccion">04 / 04</span>
             </div>
 
-            {/* Grid visual de marcas (cuando ya están cargadas desde el backend) */}
+            {/* Grid visual de marcas con sus logos oficiales */}
             {listaMarcas.length > 0 ? (
               <div className="grid-marcas-seleccion">
-                {listaMarcas.map((marca) => (
-                  <div
-                    key={marca.id}
-                    className={`tarjeta-marca-opcion ${String(datosFormulario.idMarca) === String(marca.id) ? "seleccionada" : ""}`}
-                    onClick={() =>
-                      establecerDatosFormulario((prev) => ({
-                        ...prev,
-                        idMarca: String(marca.id),
-                      }))
-                    }
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
+                {listaMarcas.map((marca) => {
+                  const logoRuta = LOGOS_MARCAS[marca.id];
+                  return (
+                    <div
+                      key={marca.id}
+                      className={`tarjeta-marca-opcion ${String(datosFormulario.idMarca) === String(marca.id) ? "seleccionada" : ""}`}
+                      onClick={() =>
                         establecerDatosFormulario((prev) => ({
                           ...prev,
                           idMarca: String(marca.id),
-                        }));
+                        }))
                       }
-                    }}
-                    aria-pressed={String(datosFormulario.idMarca) === String(marca.id)}
-                  >
-                    <span className="emoji-marca">
-                      {obtenerIconoMarca(marca.id)}
-                    </span>
-                    <span className="nombre-marca-opcion">{marca.nombre}</span>
-                  </div>
-                ))}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          establecerDatosFormulario((prev) => ({
+                            ...prev,
+                            idMarca: String(marca.id),
+                          }));
+                        }
+                      }}
+                      aria-pressed={String(datosFormulario.idMarca) === String(marca.id)}
+                    >
+                      {logoRuta ? (
+                        <img
+                          src={logoRuta}
+                          alt={marca.nombre}
+                          className="logo-marca-opcion"
+                        />
+                      ) : (
+                        <span className="nombre-marca-opcion">{marca.nombre}</span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               /* Fallback: select estándar si aún no cargaron las marcas */
