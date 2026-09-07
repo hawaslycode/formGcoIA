@@ -46,20 +46,35 @@ public class ServicioRecuperacion {
      */
     @Transactional
     public void procesarSolicitudRecuperacion(String correoUsuario) {
-        // 1. Limpiamos cualquier token previo asociado a este correo
+        if (correoUsuario == null || correoUsuario.trim().isEmpty()) {
+            throw new IllegalArgumentException("Debe ingresar un correo electrónico válido.");
+        }
+
+        // 1. Verificamos si el correo existe en la base de datos de usuarios
+        boolean existeUsuario = usuarioRepositorio.findByCorreoElectronico(correoUsuario).isPresent();
+        if (!existeUsuario) {
+            throw new IllegalArgumentException("El correo electrónico ingresado no se encuentra registrado en el sistema.");
+        }
+
+        // 2. Limpiamos cualquier token previo asociado a este correo
         tokenRecuperacionRepositorio.deleteByCorreoUsuario(correoUsuario);
 
-        // 2. Generamos un identificador criptográfico único (UUID)
+        // 3. Generamos un identificador criptográfico único (UUID)
         String tokenGenerado = UUID.randomUUID().toString();
 
-        // 3. Creamos el token con una vigencia estricta de 15 minutos
+        // 4. Creamos el token con una vigencia estricta de 15 minutos
         TokenRecuperacion nuevoToken = new TokenRecuperacion(tokenGenerado, correoUsuario, 15);
         
-        // 4. Guardamos la entidad en la base de datos
+        // 5. Guardamos la entidad en la base de datos PostgreSQL
         tokenRecuperacionRepositorio.save(nuevoToken);
 
-        // 5. Despachamos el correo electrónico mediante el servicio SMTP configurado
-        enviarCorreoRecuperacion(correoUsuario, tokenGenerado);
+        // 6. Despachamos el correo electrónico mediante SMTP con resguardo (fallback) en consola
+        try {
+            enviarCorreoRecuperacion(correoUsuario, tokenGenerado);
+        } catch (Exception excepcionSmtp) {
+            System.err.println("[SMTP ADVERTENCIA] No se pudo enviar el correo mediante el servidor SMTP: " + excepcionSmtp.getMessage());
+            System.out.println("[DESARROLLO] Enlace de recuperación generado: http://localhost:5173/restablecer-contrasena?token=" + tokenGenerado);
+        }
     }
 
     /**

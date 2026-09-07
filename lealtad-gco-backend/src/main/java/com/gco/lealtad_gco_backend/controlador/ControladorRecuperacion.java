@@ -36,8 +36,11 @@ public class ControladorRecuperacion {
         try {
             servicioRecuperacion.procesarSolicitudRecuperacion(correoUsuario);
             return ResponseEntity.ok("Proceso de recuperación iniciado exitosamente.");
-        } catch (Exception excepcion) {
-            return ResponseEntity.internalServerError().body("Error al procesar la solicitud de recuperación.");
+        } catch (IllegalArgumentException excepcionValidacion) {
+            return ResponseEntity.badRequest().body(excepcionValidacion.getMessage());
+        } catch (Exception excepcionGeneral) {
+            excepcionGeneral.printStackTrace();
+            return ResponseEntity.internalServerError().body("Error interno al procesar la solicitud de recuperación.");
         }
     }
 
