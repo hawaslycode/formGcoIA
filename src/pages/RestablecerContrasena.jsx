@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Autenticacion.css";
 import { fetchConAuth } from "../api/clienteApi";
 
-
 /**
  * Indicador visual de fortaleza de contraseña.
  * Evalúa longitud, mayúsculas, números y caracteres especiales.
@@ -46,10 +45,22 @@ const IconoOjoCerrado = () => (
   </svg>
 );
 
+const IconoEscudoSeguridad = () => (
+  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <rect x="9" y="11" width="6" height="5" rx="1"/>
+    <path d="M10 11V9.5a2 2 0 0 1 4 0V11"/>
+  </svg>
+);
+
+const IconoCheckVerde = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
+
 /**
  * Componente funcional encargado de renderizar la vista para crear una nueva contraseña.
- * Captura el token criptográfico desde la URL para autorizar la transacción
- * utilizando inicialización perezosa (Lazy Initialization) para evitar renderizados en cascada.
  */
 export const RestablecerContrasena = () => {
   const [contrasenaNueva, establecerContrasenaNueva] = useState("");
@@ -58,17 +69,11 @@ export const RestablecerContrasena = () => {
   const [verContrasena, establecerVerContrasena] = useState(false);
   const [verConfirmar, establecerVerConfirmar] = useState(false);
 
-  /**
-   * ESTADO DEL TOKEN (Inicialización Perezosa)
-   */
   const [tokenRecuperacion] = useState(() => {
     const parametrosUrl = new URLSearchParams(window.location.search);
     return parametrosUrl.get("token");
   });
 
-  /**
-   * ESTADO DE ALERTA (Inicialización Perezosa)
-   */
   const [mensajeAlerta, establecerMensajeAlerta] = useState(() => {
     if (!tokenRecuperacion) {
       return {
@@ -82,11 +87,6 @@ export const RestablecerContrasena = () => {
   const fortaleza = calcularFortaleza(contrasenaNueva);
   const coinciden = contrasenaNueva && confirmarContrasena && contrasenaNueva === confirmarContrasena;
 
-  /**
-   * Maneja el envío del formulario para actualizar la contraseña.
-   *
-   * @param {Object} evento - Objeto que representa el evento de envío del formulario.
-   */
   const manejarActualizacionContrasena = async (evento) => {
     evento.preventDefault();
 
@@ -149,22 +149,20 @@ export const RestablecerContrasena = () => {
 
       {/* ==================== PANEL IZQUIERDO — SEGURIDAD ==================== */}
       <aside className="panel-marca">
-        {/* Ícono grande de candado */}
         <div style={{
-          width: "100px",
-          height: "100px",
+          width: "90px",
+          height: "90px",
           borderRadius: "50%",
           background: "rgba(255,255,255,0.1)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           marginBottom: "32px",
-          fontSize: "2.8rem",
           animation: "flotar 4s ease-in-out infinite",
           position: "relative",
           zIndex: 1,
         }}>
-          🔐
+          <IconoEscudoSeguridad />
         </div>
         <h1 className="titulo-panel-marca">
           Restablecer Contraseña
@@ -187,14 +185,15 @@ export const RestablecerContrasena = () => {
             Consejos de Seguridad
           </p>
           {[
-            "✅ Mínimo 8 caracteres",
-            "✅ Al menos una mayúscula",
-            "✅ Al menos un número",
-            "✅ Un carácter especial (!@#$%)",
+            "Mínimo 8 caracteres",
+            "Al menos una mayúscula",
+            "Al menos un número",
+            "Un carácter especial (!@#$%)",
           ].map((tip) => (
-            <p key={tip} style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.82rem", marginBottom: "6px" }}>
-              {tip}
-            </p>
+            <div key={tip} style={{ display: "flex", alignItems: "center", gap: "8px", color: "rgba(255,255,255,0.85)", fontSize: "0.82rem", marginBottom: "6px" }}>
+              <IconoCheckVerde />
+              <span>{tip}</span>
+            </div>
           ))}
         </div>
 

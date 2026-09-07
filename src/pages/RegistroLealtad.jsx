@@ -3,7 +3,6 @@ import "./RegistroLealtad.css";
 import logoGco from "../assets/gcologo.png";
 import { fetchConAuth } from "../api/clienteApi";
 
-
 /**
  * Objeto con los beneficios exclusivos simulados por cada marca de GCO.
  */
@@ -34,7 +33,10 @@ const beneficiosPorMarcaSimulados = {
   ],
 };
 
-/** Íconos SVG para la navbar */
+/* =================================================================== */
+/* COMPONENTES DE ÍCONOS SVG VECTORIALES (Sin emojis)                 */
+/* =================================================================== */
+
 const IconoSalir = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -42,6 +44,108 @@ const IconoSalir = () => (
     <line x1="21" y1="12" x2="9" y2="12"/>
   </svg>
 );
+
+const IconoEstrella = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+);
+
+const IconoIdentificacion = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="16" rx="2"/>
+    <circle cx="9" cy="10" r="2.5"/>
+    <path d="M15 8h2M15 12h2M7 16h10"/>
+  </svg>
+);
+
+const IconoUsuario = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
+
+const IconoUbicacion = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+    <circle cx="12" cy="10" r="3"/>
+  </svg>
+);
+
+const IconoEtiqueta = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+    <line x1="7" y1="7" x2="7.01" y2="7"/>
+  </svg>
+);
+
+const IconoRegalo = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 12 20 22 4 22 4 12"/>
+    <rect x="2" y="7" width="20" height="5"/>
+    <line x1="12" y1="22" x2="12" y2="7"/>
+    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+  </svg>
+);
+
+const IconoGuardar = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+    <polyline points="17 21 17 13 7 13 7 21"/>
+    <polyline points="7 3 7 8 15 8"/>
+  </svg>
+);
+
+/* Íconos representativos para cada una de las 6 marcas del grupo */
+const IconoMarcaAmericanino = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.38 3.46L16 2a4 4 0 0 0-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+  </svg>
+);
+
+const IconoMarcaAmericanEagle = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+  </svg>
+);
+
+const IconoMarcaChevignon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>
+);
+
+const IconoMarcaEsprit = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+);
+
+const IconoMarcaNafNaf = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 3h12l4 6-10 12L2 9z"/>
+  </svg>
+);
+
+const IconoMarcaRifle = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 2v20M18 2v20M6 12h12M6 6h12M6 18h12"/>
+  </svg>
+);
+
+const obtenerIconoMarca = (idMarca) => {
+  switch (Number(idMarca)) {
+    case 1: return <IconoMarcaAmericanino />;
+    case 2: return <IconoMarcaAmericanEagle />;
+    case 3: return <IconoMarcaChevignon />;
+    case 4: return <IconoMarcaEsprit />;
+    case 5: return <IconoMarcaNafNaf />;
+    case 6: return <IconoMarcaRifle />;
+    default: return <IconoEtiqueta />;
+  }
+};
 
 export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
   const [datosFormulario, establecerDatosFormulario] = useState({
@@ -71,7 +175,6 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
 
   /**
    * 1. EFECTO PRINCIPAL: Cargar catálogos iniciales y precargar los datos del usuario.
-   * Se ha inyectado el JWT en las cabeceras para sortear el Filtro de Seguridad.
    */
   useEffect(() => {
     let estaMontado = true;
@@ -313,7 +416,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
 
       {/* ==================== HERO BANNER ==================== */}
       <header className="hero-lealtad">
-        <div className="hero-badge">⭐ Programa Exclusivo</div>
+        <div className="hero-badge">
+          <IconoEstrella /> Programa Exclusivo
+        </div>
         <h1 className="hero-titulo">
           Bienvenido al Programa de <span>Lealtad GCO</span>
         </h1>
@@ -348,7 +453,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
           {/* ======== SECCIÓN 1: IDENTIFICACIÓN ======== */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
-              <div className="icono-seccion">🪪</div>
+              <div className="icono-seccion">
+                <IconoIdentificacion />
+              </div>
               <h2 className="titulo-seccion">Identificación</h2>
               <span className="numero-seccion">01 / 04</span>
             </div>
@@ -390,7 +497,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
           {/* ======== SECCIÓN 2: DATOS PERSONALES ======== */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
-              <div className="icono-seccion">👤</div>
+              <div className="icono-seccion">
+                <IconoUsuario />
+              </div>
               <h2 className="titulo-seccion">Datos Personales</h2>
               <span className="numero-seccion">02 / 04</span>
             </div>
@@ -438,7 +547,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
           {/* ======== SECCIÓN 3: UBICACIÓN ======== */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
-              <div className="icono-seccion">📍</div>
+              <div className="icono-seccion">
+                <IconoUbicacion />
+              </div>
               <h2 className="titulo-seccion">Ubicación</h2>
               <span className="numero-seccion">03 / 04</span>
             </div>
@@ -529,7 +640,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
           {/* ======== SECCIÓN 4: SELECCIÓN DE MARCA ======== */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
-              <div className="icono-seccion">🏷️</div>
+              <div className="icono-seccion">
+                <IconoEtiqueta />
+              </div>
               <h2 className="titulo-seccion">Selección de Marca</h2>
               <span className="numero-seccion">04 / 04</span>
             </div>
@@ -560,7 +673,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
                     aria-pressed={String(datosFormulario.idMarca) === String(marca.id)}
                   >
                     <span className="emoji-marca">
-                      {["👗", "🦅", "🧥", "✨", "🌸", "👖"][marca.id - 1] || "🏷️"}
+                      {obtenerIconoMarca(marca.id)}
                     </span>
                     <span className="nombre-marca-opcion">{marca.nombre}</span>
                   </div>
@@ -596,7 +709,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
           {listaBeneficios.length > 0 && (
             <div className="contenedor-beneficios-marca">
               <div className="cabecera-beneficios">
-                <span style={{ fontSize: "1.2rem" }}>🎁</span>
+                <div style={{ color: "var(--color-azul-oscuro)", display: "flex", alignItems: "center" }}>
+                  <IconoRegalo />
+                </div>
                 <h3 className="titulo-beneficios">Beneficios Exclusivos de su Marca</h3>
               </div>
               <div className="tarjetas-beneficios">
@@ -624,7 +739,10 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
                   <span>Procesando...</span>
                 </div>
               ) : (
-                "💾  Guardar y Actualizar Información"
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+                  <IconoGuardar />
+                  <span>Guardar y Actualizar Información</span>
+                </div>
               )}
             </button>
             <button
