@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict AM6W7aRv2TfCT5IpoBhzgar2rRkKCfiBf3MjaBZaeLtxgwAggwb7dAdhWSkaWyq
+\restrict 6QfTLRGNB5UPxhYFR7m4Cztg396gbDDJBy9wLjqgcmfg0fC3XOaUqaYH6VWt7Ae
 
 -- Dumped from database version 18.6
 -- Dumped by pg_dump version 18.6
@@ -19,48 +19,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE IF EXISTS ONLY public.departamentos DROP CONSTRAINT IF EXISTS fk_pais;
-ALTER TABLE IF EXISTS ONLY public.beneficios_marca DROP CONSTRAINT IF EXISTS fk_marca_beneficio;
-ALTER TABLE IF EXISTS ONLY public.ciudades DROP CONSTRAINT IF EXISTS fk_departamento;
-ALTER TABLE IF EXISTS ONLY public.usuarios DROP CONSTRAINT IF EXISTS usuarios_pkey;
-ALTER TABLE IF EXISTS ONLY public.usuarios DROP CONSTRAINT IF EXISTS usuarios_correo_electronico_key;
-ALTER TABLE IF EXISTS ONLY public.clientes_lealtad DROP CONSTRAINT IF EXISTS uklaxxruk3rbc6yeo7fkph1s7k7;
-ALTER TABLE IF EXISTS ONLY public.clientes_lealtad DROP CONSTRAINT IF EXISTS ukho4knjf2w7jawtrh8li7q9b43;
-ALTER TABLE IF EXISTS ONLY public.tokens_recuperacion DROP CONSTRAINT IF EXISTS ukhcqjf5nk080wnan5c5wyfildd;
-ALTER TABLE IF EXISTS ONLY public.tokens_recuperacion DROP CONSTRAINT IF EXISTS tokens_recuperacion_pkey;
-ALTER TABLE IF EXISTS ONLY public.tipos_identificacion DROP CONSTRAINT IF EXISTS tipos_identificacion_pkey;
-ALTER TABLE IF EXISTS ONLY public.tipos_identificacion DROP CONSTRAINT IF EXISTS tipos_identificacion_nombre_tipo_key;
-ALTER TABLE IF EXISTS ONLY public.paises DROP CONSTRAINT IF EXISTS paises_pkey;
-ALTER TABLE IF EXISTS ONLY public.paises DROP CONSTRAINT IF EXISTS paises_nombre_pais_key;
-ALTER TABLE IF EXISTS ONLY public.marcas DROP CONSTRAINT IF EXISTS marcas_pkey;
-ALTER TABLE IF EXISTS ONLY public.marcas DROP CONSTRAINT IF EXISTS marcas_nombre_marca_key;
-ALTER TABLE IF EXISTS ONLY public.departamentos DROP CONSTRAINT IF EXISTS departamentos_pkey;
-ALTER TABLE IF EXISTS ONLY public.clientes_lealtad DROP CONSTRAINT IF EXISTS clientes_lealtad_pkey;
-ALTER TABLE IF EXISTS ONLY public.ciudades DROP CONSTRAINT IF EXISTS ciudades_pkey;
-ALTER TABLE IF EXISTS ONLY public.beneficios_marca DROP CONSTRAINT IF EXISTS beneficios_marca_pkey;
-ALTER TABLE IF EXISTS public.usuarios ALTER COLUMN id_usuario DROP DEFAULT;
-ALTER TABLE IF EXISTS public.tipos_identificacion ALTER COLUMN id_tipo_identificacion DROP DEFAULT;
-ALTER TABLE IF EXISTS public.paises ALTER COLUMN id_pais DROP DEFAULT;
-ALTER TABLE IF EXISTS public.marcas ALTER COLUMN id_marca DROP DEFAULT;
-ALTER TABLE IF EXISTS public.departamentos ALTER COLUMN id_departamento DROP DEFAULT;
-ALTER TABLE IF EXISTS public.ciudades ALTER COLUMN id_ciudad DROP DEFAULT;
-ALTER TABLE IF EXISTS public.beneficios_marca ALTER COLUMN id_beneficio DROP DEFAULT;
-DROP SEQUENCE IF EXISTS public.usuarios_id_usuario_seq;
-DROP TABLE IF EXISTS public.usuarios;
-DROP TABLE IF EXISTS public.tokens_recuperacion;
-DROP SEQUENCE IF EXISTS public.tipos_identificacion_id_tipo_identificacion_seq;
-DROP TABLE IF EXISTS public.tipos_identificacion;
-DROP SEQUENCE IF EXISTS public.paises_id_pais_seq;
-DROP TABLE IF EXISTS public.paises;
-DROP SEQUENCE IF EXISTS public.marcas_id_marca_seq;
-DROP TABLE IF EXISTS public.marcas;
-DROP SEQUENCE IF EXISTS public.departamentos_id_departamento_seq;
-DROP TABLE IF EXISTS public.departamentos;
-DROP TABLE IF EXISTS public.clientes_lealtad;
-DROP SEQUENCE IF EXISTS public.ciudades_id_ciudad_seq;
-DROP TABLE IF EXISTS public.ciudades;
-DROP SEQUENCE IF EXISTS public.beneficios_marca_id_beneficio_seq;
-DROP TABLE IF EXISTS public.beneficios_marca;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -516,9 +474,10 @@ COPY public.clientes_lealtad (id_cliente, apellidos, ciudad, correo_electronico,
 5	gco	Armenia	test@gco.com	Quindío	adsf	2005-12-10	2026-09-06 05:24:46.56302	1	test	1017541200	Colombia	Cédula de Ciudadanía
 9	manuel	Pereira	jeidermanuelhawasly@gmail.com	Risaralda	ffas	2001-12-14	2026-09-06 19:39:33.197225	5	jeider	10684174114	Colombia	Cédula de Extranjería
 10	ape1	Arequipa	corre@correo.com	Arequipa	direccion	2000-12-12	2026-09-06 21:04:26.505977	1	nombre 1	1440782	Perú	Cédula de Extranjería
-11	mendez hawasly	Medellín	jmhawaslypc@gmail.com	Antioquia	calle 80 # 28-10	2000-02-01	2026-09-06 21:06:55.667261	1	johan david	10684174181	Colombia	Cédula de Ciudadanía
 7	Cobos Jaimes	Armenia	estefanicobos18@gmail.com	Quindío	Calle 49B #93-115	1999-09-18	2026-09-06 16:23:58.459795	4	Estefania	1090538520	Colombia	Cédula de Ciudadanía
 12	123ad	Arequipa	jmhawaslypc@gmial.com	Arequipa	asdasda	1222-02-12	2026-09-07 01:32:05.418312	2	2112as	da121	Perú	Cédula de Ciudadanía
+11	mendez hawasly	Cartagena	jmhawaslypc@gmail.com	Bolívar	calle 80 # 28-10	2000-02-01	2026-09-06 21:06:55.667261	2	johan david	10684174181	Colombia	Cédula de Ciudadanía
+13	mende	Medellín	corrre@correo.com	Antioquia	asd	0200-12-12	2026-09-07 22:39:49.848728	1	asdas	10521223	Colombia	Cédula de Ciudadanía
 \.
 
 
@@ -615,7 +574,7 @@ COPY public.tokens_recuperacion (id, correo_usuario, fecha_expiracion, token_acc
 8	hawaslypc@gmail.com	2026-09-06 19:29:59.553182	c6859fe8-5018-43b4-81ab-04735a88b315
 11	corre@correo.com	2026-09-06 21:20:10.42187	d30c639e-6915-4130-b496-c4ebe021aa39
 18	jmhawaslypc@gmial.com	2026-09-07 01:54:13.858107	85fde05a-8487-4818-be7d-955875a70399
-19	jmhawaslypc@gmail.com	2026-09-07 01:55:20.922979	9768fd02-5fa7-48d8-9776-8ea82ba38966
+21	alvarezmau979@gmai.com	2026-09-07 22:55:34.832993	f3b0640c-bf4a-469f-99b2-85e8c856a675
 \.
 
 
@@ -634,8 +593,9 @@ COPY public.usuarios (id_usuario, correo_electronico, contrasena, fecha_creacion
 15	stefa@gmail.com	$2a$10$VXrJYQPvFtTwpCA1fRuTZOvpuqXdR3Z/VW775CTGKtqvR0lvx7vxC	2026-09-06 19:15:37.528819
 16	jeidermanuelhawasly@gmail.com	$2a$10$cARntlzWqNZ3JBvIqfrSGu3kqgt7ufFnb4EuvEVv84ZIq3Q9cCMAy	2026-09-06 19:37:00.058112
 17	corre@correo.com	$2a$10$5lnVh3sq23BbXbQvAM/NpuDXgJ8CAap/acr.dVrbLJ5SGSvRJD3x2	2026-09-06 21:03:32.705153
-18	jmhawaslypc@gmail.com	$2a$10$o7O06oYIm40NgtFAmqSXi.pTnV4sM1hsiWXOHitmQAoqPBNy5kAb2	2026-09-06 21:06:23.059021
 19	jmhawaslypc@gmial.com	$2a$10$QIi8xwVA2xWFW.5ICUrBKelmqRrPewNa7pS2i5x/StNH7Fd2c4sHG	2026-09-07 01:31:23.951249
+18	jmhawaslypc@gmail.com	$2a$10$mC/rWoEVCYO/Exj0fVM1suv5l6KZxagxdxKN9OedtPd2nnWkjTOc2	2026-09-06 21:06:23.059021
+20	corrre@correo.com	$2a$10$kyf5wsgRxHsdWWuRv7pjeefxdHvvMYHox56y1SH0602etmAS61h.C	2026-09-07 03:10:37.566918
 \.
 
 
@@ -657,7 +617,7 @@ SELECT pg_catalog.setval('public.ciudades_id_ciudad_seq', 51, true);
 -- Name: clientes_lealtad_id_cliente_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.clientes_lealtad_id_cliente_seq', 12, true);
+SELECT pg_catalog.setval('public.clientes_lealtad_id_cliente_seq', 13, true);
 
 
 --
@@ -692,14 +652,14 @@ SELECT pg_catalog.setval('public.tipos_identificacion_id_tipo_identificacion_seq
 -- Name: tokens_recuperacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tokens_recuperacion_id_seq', 19, true);
+SELECT pg_catalog.setval('public.tokens_recuperacion_id_seq', 21, true);
 
 
 --
 -- Name: usuarios_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuarios_id_usuario_seq', 19, true);
+SELECT pg_catalog.setval('public.usuarios_id_usuario_seq', 20, true);
 
 
 --
@@ -858,5 +818,5 @@ ALTER TABLE ONLY public.departamentos
 -- PostgreSQL database dump complete
 --
 
-\unrestrict AM6W7aRv2TfCT5IpoBhzgar2rRkKCfiBf3MjaBZaeLtxgwAggwb7dAdhWSkaWyq
+\unrestrict 6QfTLRGNB5UPxhYFR7m4Cztg396gbDDJBy9wLjqgcmfg0fC3XOaUqaYH6VWt7Ae
 
