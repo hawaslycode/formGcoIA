@@ -1,7 +1,7 @@
 services:
   - type: web
     name: lealtad-gco-backend
-    env: docker
+    runtime: docker
     dockerfilePath: ./lealtad-gco-backend/Dockerfile
     dockerContext: ./lealtad-gco-backend
     plan: free
@@ -22,6 +22,6 @@ services:
 databases:
   - name: lealtad-gco-db
     databaseName: db_lealtad_gco
-    user: postgres
+    user: lealtad_user
     plan: free
     region: oregon
