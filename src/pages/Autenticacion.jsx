@@ -157,8 +157,8 @@ export const Autenticacion = ({ alAutenticar }) => {
     establecerMensajeAlerta({ texto: "", tipo: "" });
 
     try {
-      const respuesta = await fetch(
-        "http://localhost:8080/api/autenticacion/olvide-contrasena",
+      const respuesta = await fetchConAuth(
+        "/api/autenticacion/olvide-contrasena",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
