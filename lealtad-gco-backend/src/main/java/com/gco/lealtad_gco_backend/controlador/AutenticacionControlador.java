@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api/autenticacion")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(originPatterns = "*")
 public class AutenticacionControlador {
 
     private final UsuarioRepositorio repositorioDeUsuarios;

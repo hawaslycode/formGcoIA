@@ -80,11 +80,11 @@ public class ConfiguracionSeguridad {
     public CorsConfigurationSource crearFuenteConfiguracionCors() {
         CorsConfiguration configuracionCors = new CorsConfiguration();
         
-        // Permitimos explícitamente el origen de tu servidor de desarrollo en React
-        configuracionCors.setAllowedOrigins(List.of("http://localhost:5173"));
+        // Permitimos el origen local de React y cualquier dominio de Vercel/producción
+        configuracionCors.setAllowedOriginPatterns(List.of("*"));
         
         // Métodos HTTP permitidos para las transacciones REST
-        configuracionCors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuracionCors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         
         // Permitimos todas las cabeceras, incluyendo 'Authorization' (fundamental para el JWT)
         configuracionCors.setAllowedHeaders(List.of("*"));

@@ -12,7 +12,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/autenticacion")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(originPatterns = "*")
 public class ControladorRecuperacion {
 
     private final ServicioRecuperacion servicioRecuperacion;

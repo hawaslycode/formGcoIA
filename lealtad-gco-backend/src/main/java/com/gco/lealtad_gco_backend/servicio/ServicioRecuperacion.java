@@ -4,6 +4,7 @@ import com.gco.lealtad_gco_backend.modelo.TokenRecuperacion;
 import com.gco.lealtad_gco_backend.modelo.Usuario;
 import com.gco.lealtad_gco_backend.repositorio.TokenRecuperacionRepositorio;
 import com.gco.lealtad_gco_backend.repositorio.UsuarioRepositorio;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,9 @@ public class ServicioRecuperacion {
     private final JavaMailSender despachadorDeCorreos;
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder codificadorContrasenas;
+
+    @Value("${app.frontend.url:https://formulariogcolealtad.vercel.app}")
+    private String urlFrontend;
 
     /**
      * Inyección de dependencias mediante el constructor de la clase.
@@ -73,7 +77,7 @@ public class ServicioRecuperacion {
             enviarCorreoRecuperacion(correoUsuario, tokenGenerado);
         } catch (Exception excepcionSmtp) {
             System.err.println("[SMTP ADVERTENCIA] No se pudo enviar el correo mediante el servidor SMTP: " + excepcionSmtp.getMessage());
-            System.out.println("[DESARROLLO] Enlace de recuperación generado: http://localhost:5173/restablecer-contrasena?token=" + tokenGenerado);
+            System.out.println("[INFO] Enlace de recuperación generado: " + urlFrontend + "/restablecer-contrasena?token=" + tokenGenerado);
         }
     }
 
@@ -84,7 +88,7 @@ public class ServicioRecuperacion {
      * @param token Token criptográfico único generado.
      */
     private void enviarCorreoRecuperacion(String destinatario, String token) {
-        String enlaceRecuperacion = "http://localhost:5173/restablecer-contrasena?token=" + token;
+        String enlaceRecuperacion = urlFrontend + "/restablecer-contrasena?token=" + token;
 
         SimpleMailMessage mensajeCorreo = new SimpleMailMessage();
         mensajeCorreo.setFrom("hawaslycode@gmail.com");

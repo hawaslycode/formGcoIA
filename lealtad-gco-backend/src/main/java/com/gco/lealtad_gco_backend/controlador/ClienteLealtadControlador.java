@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api/lealtad")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(originPatterns = "*")
 public class ClienteLealtadControlador {
 
     private final ClienteLealtadRepositorio repositorioDeLealtad;

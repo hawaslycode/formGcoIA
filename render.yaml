@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: lealtad-gco-backend
+    env: docker
+    dockerfilePath: ./lealtad-gco-backend/Dockerfile
+    dockerContext: ./lealtad-gco-backend
+    plan: free
+    region: oregon
+    healthCheckPath: /api/catalogos/marcas
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: lealtad-gco-db
+          property: connectionString
+      - key: APP_FRONTEND_URL
+        value: https://formulariogcolealtad.vercel.app
+      - key: SPRING_MAIL_USERNAME
+        value: hawaslycode@gmail.com
+      - key: SPRING_MAIL_PASSWORD
+        value: dswb ttbh ozuh odrw
+
+databases:
+  - name: lealtad-gco-db
+    databaseName: db_lealtad_gco
+    user: postgres
+    plan: free
+    region: oregon
