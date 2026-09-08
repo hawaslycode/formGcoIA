@@ -25,24 +25,24 @@ public class CatalogoControlador {
     @GetMapping("/tipos-identificacion")
     public ResponseEntity<List<Map<String, Object>>> despacharTiposDeIdentificacion() {
         return ResponseEntity.ok(conectorJdbc
-                .queryForList("SELECT id_tipo_identificacion AS id, nombre_tipo AS nombre FROM tipos_identificacion"));
+                .queryForList("SELECT id_tipo_identificacion AS id, nombre_tipo AS nombre FROM tipos_identificacion ORDER BY id_tipo_identificacion ASC"));
     }
 
     @GetMapping("/marcas")
     public ResponseEntity<List<Map<String, Object>>> despacharMarcasDisponibles() {
         return ResponseEntity
-                .ok(conectorJdbc.queryForList("SELECT id_marca AS id, nombre_marca AS nombre FROM marcas"));
+                .ok(conectorJdbc.queryForList("SELECT id_marca AS id, nombre_marca AS nombre FROM marcas ORDER BY id_marca ASC"));
     }
 
     @GetMapping("/paises")
     public ResponseEntity<List<Map<String, Object>>> despacharPaises() {
-        return ResponseEntity.ok(conectorJdbc.queryForList("SELECT id_pais AS id, nombre_pais AS nombre FROM paises"));
+        return ResponseEntity.ok(conectorJdbc.queryForList("SELECT id_pais AS id, nombre_pais AS nombre FROM paises ORDER BY id_pais ASC"));
     }
 
     @GetMapping("/departamentos/{idPais}")
     public ResponseEntity<List<Map<String, Object>>> despacharDepartamentosPorPais(@PathVariable Long idPais) {
         return ResponseEntity.ok(conectorJdbc.queryForList(
-                "SELECT id_departamento AS id, nombre_departamento AS nombre FROM departamentos WHERE id_pais = ?",
+                "SELECT id_departamento AS id, nombre_departamento AS nombre FROM departamentos WHERE id_pais = ? ORDER BY nombre_departamento ASC",
                 idPais));
     }
 
@@ -50,7 +50,7 @@ public class CatalogoControlador {
     public ResponseEntity<List<Map<String, Object>>> despacharCiudadesPorDepartamento(
             @PathVariable Long idDepartamento) {
         return ResponseEntity.ok(conectorJdbc.queryForList(
-                "SELECT id_ciudad AS id, nombre_ciudad AS nombre FROM ciudades WHERE id_departamento = ?",
+                "SELECT id_ciudad AS id, nombre_ciudad AS nombre FROM ciudades WHERE id_departamento = ? ORDER BY nombre_ciudad ASC",
                 idDepartamento));
     }
 }

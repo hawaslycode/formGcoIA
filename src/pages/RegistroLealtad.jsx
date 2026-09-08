@@ -192,7 +192,16 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             let dId = "";
 
             if (datosCliente.pais && paisesCargados.length > 0) {
-              const paisObj = paisesCargados.find((p) => p.nombre === datosCliente.pais);
+              const normalizarTexto = (texto) =>
+                (texto || "")
+                  .trim()
+                  .toLowerCase()
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "");
+
+              const paisObj = paisesCargados.find(
+                (p) => normalizarTexto(p.nombre) === normalizarTexto(datosCliente.pais) || p.nombre === datosCliente.pais
+              );
               if (paisObj) {
                 pId = String(paisObj.id);
                 establecerPaisSeleccionadoId(pId);
@@ -204,7 +213,9 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
                   establecerListaDepartamentos(deps);
 
                   if (datosCliente.departamento) {
-                    const depObj = deps.find((d) => d.nombre === datosCliente.departamento);
+                    const depObj = deps.find(
+                      (d) => normalizarTexto(d.nombre) === normalizarTexto(datosCliente.departamento) || d.nombre === datosCliente.departamento
+                    );
                     if (depObj) {
                       dId = String(depObj.id);
                       establecerDepartamentoSeleccionadoId(dId);

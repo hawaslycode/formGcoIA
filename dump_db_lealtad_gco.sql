@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 6QfTLRGNB5UPxhYFR7m4Cztg396gbDDJBy9wLjqgcmfg0fC3XOaUqaYH6VWt7Ae
+\restrict 8SMHlTUf9NTGi19rZ1MR43ni4lmuFdbfv859KXNyU2qYfTcXDn9kjmirttC8zuW
 
 -- Dumped from database version 18.6
 -- Dumped by pg_dump version 18.6
@@ -19,6 +19,48 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE IF EXISTS ONLY public.departamentos DROP CONSTRAINT IF EXISTS fk_pais;
+ALTER TABLE IF EXISTS ONLY public.beneficios_marca DROP CONSTRAINT IF EXISTS fk_marca_beneficio;
+ALTER TABLE IF EXISTS ONLY public.ciudades DROP CONSTRAINT IF EXISTS fk_departamento;
+ALTER TABLE IF EXISTS ONLY public.usuarios DROP CONSTRAINT IF EXISTS usuarios_pkey;
+ALTER TABLE IF EXISTS ONLY public.usuarios DROP CONSTRAINT IF EXISTS usuarios_correo_electronico_key;
+ALTER TABLE IF EXISTS ONLY public.clientes_lealtad DROP CONSTRAINT IF EXISTS uklaxxruk3rbc6yeo7fkph1s7k7;
+ALTER TABLE IF EXISTS ONLY public.clientes_lealtad DROP CONSTRAINT IF EXISTS ukho4knjf2w7jawtrh8li7q9b43;
+ALTER TABLE IF EXISTS ONLY public.tokens_recuperacion DROP CONSTRAINT IF EXISTS ukhcqjf5nk080wnan5c5wyfildd;
+ALTER TABLE IF EXISTS ONLY public.tokens_recuperacion DROP CONSTRAINT IF EXISTS tokens_recuperacion_pkey;
+ALTER TABLE IF EXISTS ONLY public.tipos_identificacion DROP CONSTRAINT IF EXISTS tipos_identificacion_pkey;
+ALTER TABLE IF EXISTS ONLY public.tipos_identificacion DROP CONSTRAINT IF EXISTS tipos_identificacion_nombre_tipo_key;
+ALTER TABLE IF EXISTS ONLY public.paises DROP CONSTRAINT IF EXISTS paises_pkey;
+ALTER TABLE IF EXISTS ONLY public.paises DROP CONSTRAINT IF EXISTS paises_nombre_pais_key;
+ALTER TABLE IF EXISTS ONLY public.marcas DROP CONSTRAINT IF EXISTS marcas_pkey;
+ALTER TABLE IF EXISTS ONLY public.marcas DROP CONSTRAINT IF EXISTS marcas_nombre_marca_key;
+ALTER TABLE IF EXISTS ONLY public.departamentos DROP CONSTRAINT IF EXISTS departamentos_pkey;
+ALTER TABLE IF EXISTS ONLY public.clientes_lealtad DROP CONSTRAINT IF EXISTS clientes_lealtad_pkey;
+ALTER TABLE IF EXISTS ONLY public.ciudades DROP CONSTRAINT IF EXISTS ciudades_pkey;
+ALTER TABLE IF EXISTS ONLY public.beneficios_marca DROP CONSTRAINT IF EXISTS beneficios_marca_pkey;
+ALTER TABLE IF EXISTS public.usuarios ALTER COLUMN id_usuario DROP DEFAULT;
+ALTER TABLE IF EXISTS public.tipos_identificacion ALTER COLUMN id_tipo_identificacion DROP DEFAULT;
+ALTER TABLE IF EXISTS public.paises ALTER COLUMN id_pais DROP DEFAULT;
+ALTER TABLE IF EXISTS public.marcas ALTER COLUMN id_marca DROP DEFAULT;
+ALTER TABLE IF EXISTS public.departamentos ALTER COLUMN id_departamento DROP DEFAULT;
+ALTER TABLE IF EXISTS public.ciudades ALTER COLUMN id_ciudad DROP DEFAULT;
+ALTER TABLE IF EXISTS public.beneficios_marca ALTER COLUMN id_beneficio DROP DEFAULT;
+DROP SEQUENCE IF EXISTS public.usuarios_id_usuario_seq;
+DROP TABLE IF EXISTS public.usuarios;
+DROP TABLE IF EXISTS public.tokens_recuperacion;
+DROP SEQUENCE IF EXISTS public.tipos_identificacion_id_tipo_identificacion_seq;
+DROP TABLE IF EXISTS public.tipos_identificacion;
+DROP SEQUENCE IF EXISTS public.paises_id_pais_seq;
+DROP TABLE IF EXISTS public.paises;
+DROP SEQUENCE IF EXISTS public.marcas_id_marca_seq;
+DROP TABLE IF EXISTS public.marcas;
+DROP SEQUENCE IF EXISTS public.departamentos_id_departamento_seq;
+DROP TABLE IF EXISTS public.departamentos;
+DROP TABLE IF EXISTS public.clientes_lealtad;
+DROP SEQUENCE IF EXISTS public.ciudades_id_ciudad_seq;
+DROP TABLE IF EXISTS public.ciudades;
+DROP SEQUENCE IF EXISTS public.beneficios_marca_id_beneficio_seq;
+DROP TABLE IF EXISTS public.beneficios_marca;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -389,14 +431,14 @@ COPY public.beneficios_marca (id_beneficio, id_marca, titulo_beneficio, descripc
 1	1	Bono de Bienvenida	20% de descuento en tu primera compra como miembro del programa de lealtad.
 2	1	Cashback Exclusivo	Acumula el 5% de tus compras en puntos redimibles en cualquier tienda Americanino.
 3	2	Acceso Anticipado VIP	Entrada preferencial y anticipada a colecciones de temporada y rebajas especiales.
-4	2	Obsequio de Cumpleaños	Bono de $50.000 COP redimible durante el mes de tu cumpleaños.
+4	2	Obsequio de Cumpleaños	Bono de .000 COP redimible durante el mes de tu cumpleaños.
 5	3	Envío Gratuito	Envíos sin costo en todas tus compras realizadas a través de canales digitales.
 6	3	Garantía Extendida	Garantía preferencial en chaquetas de cuero y prendas de alta durabilidad.
 7	4	Descuento Aniversario	30% de descuento en todo el catálogo durante el mes de aniversario de la marca.
 8	4	Taller de Estilo	Invitación exclusiva a asesorías de imagen personalizadas y eventos privados.
 9	5	Preventa Flash	Descuentos exclusivos de hasta el 40% en colecciones seleccionadas antes del público general.
 10	5	Acumulación Doble	Doble acumulación de puntos en compras realizadas los fines de semana.
-11	6	Puntos Redimibles	1 punto por cada $1.000 COP gastados, utilizables como parte de pago en tiendas físicas.
+11	6	Puntos Redimibles	1 punto por cada .000 COP gastados, utilizables como parte de pago en tiendas físicas.
 12	6	Mantenimiento de Prendas	Servicio de ajuste y dobladillos sin costo en jeans y pantalones.
 \.
 
@@ -406,57 +448,178 @@ COPY public.beneficios_marca (id_beneficio, id_marca, titulo_beneficio, descripc
 --
 
 COPY public.ciudades (id_ciudad, nombre_ciudad, id_departamento) FROM stdin;
-1	Medellín	1
-2	Envigado	1
-3	Sabaneta	1
-4	Rionegro	1
-5	Bello	1
-6	Apartadó	1
-7	Barranquilla	2
-8	Cartagena	3
-9	Tunja	4
-10	Duitama	4
-11	Manizales	5
-12	Florencia	6
-13	Yopal	7
-14	Popayán	8
-15	Valledupar	9
-16	Quibdó	10
-17	Montería	11
-18	Chía	12
-19	Neiva	13
-20	Santa Marta	14
-21	Villavicencio	15
-22	Acacías	15
-23	Pasto	16
-24	Ipiales	16
-25	Cúcuta	17
-26	Armenia	18
-27	Pereira	19
-28	Bucaramanga	20
-29	Piedecuesta	20
-30	Barrancabermeja	20
-31	San Gil	20
-32	Sincelejo	21
-33	Ibagué	22
-34	Cali	23
-35	Palmira	23
-36	Cartago	23
-37	Bogotá	24
-38	Lima	25
-39	Arequipa	26
-40	Quito	27
-41	Guayaquil	28
-42	Cuenca	29
-43	Manta	30
-44	Santo Domingo	31
-45	Ambato	32
-46	Ciudad de Guatemala	33
-47	Chiquimula	34
-48	Chimaltenango	35
-49	Quetzaltenango	36
-50	Houston	37
-51	Cypress	37
+1	Leticia	1
+2	Puerto Nariño	1
+3	Medellín	2
+4	Bello	2
+5	Itagüí	2
+6	Envigado	2
+7	Sabaneta	2
+8	Rionegro	2
+9	Apartadó	2
+10	Turbo	2
+11	Caucasia	2
+12	Arauca	3
+13	Tame	3
+14	Saravena	3
+15	Barranquilla	4
+16	Soledad	4
+17	Malambo	4
+18	Puerto Colombia	4
+19	Sabanalarga	4
+20	Bogotá	5
+21	Cartagena	6
+22	Magangué	6
+23	Turbaco	6
+24	El Carmen de Bolívar	6
+25	Tunja	7
+26	Duitama	7
+27	Sogamoso	7
+28	Chiquinquirá	7
+29	Paipa	7
+30	Manizales	8
+31	La Dorada	8
+32	Villamaría	8
+33	Chinchiná	8
+34	Florencia	9
+35	San Vicente del Caguán	9
+36	Yopal	10
+37	Aguazul	10
+38	Villanueva	10
+39	Popayán	11
+40	Santander de Quilichao	11
+41	Puerto Tejada	11
+42	Valledupar	12
+43	Aguachica	12
+44	Agustín Codazzi	12
+45	Quibdó	13
+46	Istmina	13
+47	Montería	14
+48	Cereté	14
+49	Lorica	14
+50	Montelíbano	14
+51	Sahagún	14
+52	Chía	15
+53	Soacha	15
+54	Zipaquirá	15
+55	Facatativá	15
+56	Fusagasugá	15
+57	Girardot	15
+58	Mosquera	15
+59	Madrid	15
+60	Funza	15
+61	Cajicá	15
+62	Inírida	16
+63	San José del Guaviare	17
+64	Neiva	18
+65	Pitalito	18
+66	Garzón	18
+67	La Plata	18
+68	Riohacha	19
+69	Maicao	19
+70	Uribia	19
+71	Fonseca	19
+72	San Juan del Cesar	19
+73	Santa Marta	20
+74	Ciénaga	20
+75	Fundación	20
+76	El Banco	20
+77	Villavicencio	21
+78	Acacías	21
+79	Granada	21
+80	Puerto López	21
+81	Pasto	22
+82	Ipiales	22
+83	Tumaco	22
+84	Túquerres	22
+85	Cúcuta	23
+86	Ocaña	23
+87	Pamplona	23
+88	Villa del Rosario	23
+89	Los Patios	23
+90	Mocoa	24
+91	Puerto Asís	24
+92	Orito	24
+93	Armenia	25
+94	Calarcá	25
+95	La Tebaida	25
+96	Montenegro	25
+97	Quimbaya	25
+98	Pereira	26
+99	Dosquebradas	26
+100	Santa Rosa de Cabal	26
+101	San Andrés	27
+102	Providencia	27
+103	Bucaramanga	28
+104	Floridablanca	28
+105	Girón	28
+106	Piedecuesta	28
+107	Barrancabermeja	28
+108	San Gil	28
+109	Socorro	28
+110	Sincelejo	29
+111	Corozal	29
+112	San Marcos	29
+113	Ibagué	30
+114	Espinal	30
+115	Melgar	30
+116	Mariquita	30
+117	Chaparral	30
+118	Cali	31
+119	Palmira	31
+120	Buenaventura	31
+121	Tuluá	31
+122	Buga	31
+123	Cartago	31
+124	Jamundí	31
+125	Yumbo	31
+126	Mitú	32
+127	Puerto Carreño	33
+128	Lima	34
+129	Miraflores	34
+130	San Isidro	34
+131	Surco	34
+132	Arequipa	35
+133	Cayma	35
+134	Yanahuara	35
+135	Cusco	36
+136	Wanchaq	36
+137	Trujillo	37
+138	Piura	38
+139	Sullana	38
+140	Quito	39
+141	Sangolquí	39
+142	Guayaquil	40
+143	Samborondón	40
+144	Durán	40
+145	Cuenca	41
+146	Manta	42
+147	Portoviejo	42
+148	Santo Domingo	43
+149	Ambato	44
+150	Loja	45
+151	Ciudad de Guatemala	46
+152	Mixco	46
+153	Villa Nueva	46
+154	Chiquimula	47
+155	Chimaltenango	48
+156	Quetzaltenango	49
+157	Antigua Guatemala	50
+158	Houston	51
+159	Cypress	51
+160	Dallas	51
+161	Austin	51
+162	San Antonio	51
+163	Miami	52
+164	Orlando	52
+165	Tampa	52
+166	Fort Lauderdale	52
+167	Los Angeles	53
+168	San Francisco	53
+169	San Diego	53
+170	New York	54
+171	Brooklyn	54
+172	Queens	54
 \.
 
 
@@ -486,43 +649,60 @@ COPY public.clientes_lealtad (id_cliente, apellidos, ciudad, correo_electronico,
 --
 
 COPY public.departamentos (id_departamento, nombre_departamento, id_pais) FROM stdin;
-1	Antioquia	1
-2	Atlántico	1
-3	Bolívar	1
-4	Boyacá	1
-5	Caldas	1
-6	Caquetá	1
-7	Casanare	1
-8	Cauca	1
-9	Cesar	1
-10	Chocó	1
-11	Córdoba	1
-12	Cundinamarca	1
-13	Huila	1
-14	Magdalena	1
-15	Meta	1
-16	Nariño	1
-17	Norte de Santander	1
-18	Quindío	1
-19	Risaralda	1
-20	Santander	1
-21	Sucre	1
-22	Tolima	1
-23	Valle del Cauca	1
-24	Bogotá D.C.	1
-25	Lima	2
-26	Arequipa	2
-27	Pichincha	3
-28	Guayas	3
-29	Azuay	3
-30	Manabí	3
-31	Santo Domingo de los Tsáchilas	3
-32	Tungurahua	3
-33	Guatemala	4
-34	Chiquimula	4
-35	Chimaltenango	4
-36	Quetzaltenango	4
-37	Texas	5
+1	Amazonas	1
+2	Antioquia	1
+3	Arauca	1
+4	Atlántico	1
+5	Bogotá D.C.	1
+6	Bolívar	1
+7	Boyacá	1
+8	Caldas	1
+9	Caquetá	1
+10	Casanare	1
+11	Cauca	1
+12	Cesar	1
+13	Chocó	1
+14	Córdoba	1
+15	Cundinamarca	1
+16	Guainía	1
+17	Guaviare	1
+18	Huila	1
+19	La Guajira	1
+20	Magdalena	1
+21	Meta	1
+22	Nariño	1
+23	Norte de Santander	1
+24	Putumayo	1
+25	Quindío	1
+26	Risaralda	1
+27	San Andrés y Providencia	1
+28	Santander	1
+29	Sucre	1
+30	Tolima	1
+31	Valle del Cauca	1
+32	Vaupés	1
+33	Vichada	1
+34	Lima	2
+35	Arequipa	2
+36	Cusco	2
+37	La Libertad	2
+38	Piura	2
+39	Pichincha	3
+40	Guayas	3
+41	Azuay	3
+42	Manabí	3
+43	Santo Domingo de los Tsáchilas	3
+44	Tungurahua	3
+45	Loja	3
+46	Guatemala	4
+47	Chiquimula	4
+48	Chimaltenango	4
+49	Quetzaltenango	4
+50	Sacatepéquez	4
+51	Texas	5
+52	Florida	5
+53	California	5
+54	New York	5
 \.
 
 
@@ -610,7 +790,7 @@ SELECT pg_catalog.setval('public.beneficios_marca_id_beneficio_seq', 12, true);
 -- Name: ciudades_id_ciudad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ciudades_id_ciudad_seq', 51, true);
+SELECT pg_catalog.setval('public.ciudades_id_ciudad_seq', 172, true);
 
 
 --
@@ -624,21 +804,21 @@ SELECT pg_catalog.setval('public.clientes_lealtad_id_cliente_seq', 13, true);
 -- Name: departamentos_id_departamento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.departamentos_id_departamento_seq', 1, false);
+SELECT pg_catalog.setval('public.departamentos_id_departamento_seq', 54, true);
 
 
 --
 -- Name: marcas_id_marca_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.marcas_id_marca_seq', 12, true);
+SELECT pg_catalog.setval('public.marcas_id_marca_seq', 6, true);
 
 
 --
 -- Name: paises_id_pais_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.paises_id_pais_seq', 1, false);
+SELECT pg_catalog.setval('public.paises_id_pais_seq', 5, true);
 
 
 --
@@ -818,5 +998,5 @@ ALTER TABLE ONLY public.departamentos
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 6QfTLRGNB5UPxhYFR7m4Cztg396gbDDJBy9wLjqgcmfg0fC3XOaUqaYH6VWt7Ae
+\unrestrict 8SMHlTUf9NTGi19rZ1MR43ni4lmuFdbfv859KXNyU2qYfTcXDn9kjmirttC8zuW
 
