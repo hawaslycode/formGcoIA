@@ -66,6 +66,7 @@ public class ConfiguracionSeguridad {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(autorizacion -> autorizacion
                 .requestMatchers("/api/autenticacion/**").permitAll()
+                .requestMatchers("/api/catalogos/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(filtroAutenticacionJwt, UsernamePasswordAuthenticationFilter.class);
