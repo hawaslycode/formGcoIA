@@ -9,15 +9,15 @@ import java.security.Key;
 import java.util.Date;
 
 /**
- * Componente utilitario para la generación, lectura y validación de JSON Web Tokens (JWT).
- * Gestiona la firma criptográfica para asegurar que los tokens no sean alterados.
+ * Componente utilitario para la generacion, lectura y validacion de JSON Web Tokens (JWT).
+ * Gestiona la firma criptografica para asegurar que los tokens no sean alterados.
  */
 @Component
 public class UtilidadJwt {
 
     /**
-     * Clave secreta generada dinámicamente para firmar los tokens.
-     * En un entorno estricto de producción, este valor debería inyectarse 
+     * Clave secreta generada dinamicamente para firmar los tokens.
+     * En un entorno estricto de produccion, este valor deberia inyectarse 
      * desde una variable de entorno (.env) o desde application.properties.
      */
     private final Key claveSecreta = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -30,7 +30,7 @@ public class UtilidadJwt {
     /**
      * Fabrica un token JWT seguro con el correo del usuario como sujeto principal.
      * 
-     * @param correoElectronico Identificador único del usuario autenticado.
+     * @param correoElectronico Identificador unico del usuario autenticado.
      * @return Cadena de texto que representa el token firmado.
      */
     public String generarToken(String correoElectronico) {
@@ -43,10 +43,10 @@ public class UtilidadJwt {
     }
 
     /**
-     * Desencripta el token para extraer el correo electrónico del usuario.
+     * Desencripta el token para extraer el correo electronico del usuario.
      * 
      * @param token Cadena JWT enviada por el frontend.
-     * @return El correo electrónico contenido en la carga útil (Payload).
+     * @return El correo electronico contenido en la carga util (Payload).
      */
     public String extraerCorreoElectronico(String token) {
         return Jwts.parserBuilder()
@@ -58,11 +58,11 @@ public class UtilidadJwt {
     }
 
     /**
-     * Comprueba si el token enviado coincide con el usuario y si aún está vigente.
+     * Comprueba si el token enviado coincide con el usuario y si aun esta vigente.
      * 
      * @param token El JWT a validar.
      * @param correoElectronico El correo esperado.
-     * @return Verdadero si el token es legítimo y no ha caducado.
+     * @return Verdadero si el token es legitimo y no ha caducado.
      */
     public boolean validarToken(String token, String correoElectronico) {
         final String correoExtraido = extraerCorreoElectronico(token);

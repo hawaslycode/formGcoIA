@@ -3,8 +3,8 @@ import "./Autenticacion.css";
 import { fetchConAuth } from "../api/clienteApi";
 
 /**
- * Indicador visual de fortaleza de contraseña.
- * Evalúa longitud, mayúsculas, números y caracteres especiales.
+ * Indicador visual de fortaleza de contrasena.
+ * Evalua longitud, mayusculas, numeros y caracteres especiales.
  */
 const calcularFortaleza = (contrasena) => {
   if (!contrasena) return { nivel: 0, etiqueta: "", color: "" };
@@ -60,7 +60,7 @@ const IconoCheckVerde = () => (
 );
 
 /**
- * Componente funcional encargado de renderizar la vista para crear una nueva contraseña.
+ * Componente funcional encargado de renderizar la vista para crear una nueva contrasena.
  */
 export const RestablecerContrasena = () => {
   const [contrasenaNueva, establecerContrasenaNueva] = useState("");
@@ -147,7 +147,7 @@ export const RestablecerContrasena = () => {
   return (
     <div className="contenedor-autenticacion">
 
-      {/* ==================== PANEL IZQUIERDO — SEGURIDAD ==================== */}
+      {/* Panel izquierdo - seguridad */}
       <aside className="panel-marca">
         <div style={{
           width: "90px",
@@ -200,7 +200,7 @@ export const RestablecerContrasena = () => {
         <div className="divisor-panel" />
       </aside>
 
-      {/* ==================== PANEL DERECHO — FORMULARIO ==================== */}
+      {/* Panel derecho - formulario */}
       <section className="panel-formulario">
         <div className="tarjeta-autenticacion">
 
@@ -224,7 +224,7 @@ export const RestablecerContrasena = () => {
           )}
 
           <form onSubmit={manejarActualizacionContrasena}>
-            {/* Nueva contraseña */}
+            {/* Nueva contrasena */}
             <div className="grupo-input">
               <label htmlFor="contrasenaNueva">Nueva Contraseña</label>
               <div className="input-con-icono">
@@ -275,7 +275,7 @@ export const RestablecerContrasena = () => {
               )}
             </div>
 
-            {/* Confirmar contraseña */}
+            {/* Confirmar contrasena */}
             <div className="grupo-input">
               <label htmlFor="confirmarContrasena">Confirmar Contraseña</label>
               <div className="input-con-icono">
@@ -318,7 +318,7 @@ export const RestablecerContrasena = () => {
               )}
             </div>
 
-            {/* Botón principal */}
+            {/* Boton principal */}
             <button
               type="submit"
               id="boton-actualizar-contrasena"

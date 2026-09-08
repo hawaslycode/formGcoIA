@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 /**
- * Repositorio de Spring Data JPA para la gestión y persistencia de la entidad TokenRecuperacion.
+ * Repositorio de Spring Data JPA para la gestion y persistencia de la entidad TokenRecuperacion.
  */
 public interface TokenRecuperacionRepositorio extends JpaRepository<TokenRecuperacion, Long> {
 
     /**
-     * Busca un registro de token de recuperación utilizando la cadena de acceso única.
+     * Busca un registro de token de recuperacion utilizando la cadena de acceso unica.
      * 
      * @param tokenAcceso Cadena del token a buscar.
      * @return Un objeto Optional que contiene la entidad si es encontrada.
@@ -19,10 +19,10 @@ public interface TokenRecuperacionRepositorio extends JpaRepository<TokenRecuper
     Optional<TokenRecuperacion> findByTokenAcceso(String tokenAcceso);
 
     /**
-     * Elimina de la base de datos todos los tokens asociados previamente a un correo específico,
-     * evitando acumulación de registros obsoletos al solicitar múltiples recuperaciones.
+     * Elimina de la base de datos todos los tokens asociados previamente a un correo especifico,
+     * evitando acumulacion de registros obsoletos al solicitar multiples recuperaciones.
      * 
-     * @param correoUsuario Correo del usuario cuyos tokens serán depurados.
+     * @param correoUsuario Correo del usuario cuyos tokens seran depurados.
      */
     void deleteByCorreoUsuario(String correoUsuario);
 }

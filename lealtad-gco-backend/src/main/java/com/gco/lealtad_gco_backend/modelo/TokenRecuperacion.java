@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  * Entidad que representa la tabla 'tokens_recuperacion' en la base de datos PostgreSQL.
- * Almacena de forma temporal los tokens criptográficos de un solo uso para la recuperación de contraseñas.
+ * Almacena de forma temporal los tokens criptograficos de un solo uso para la recuperacion de contrasenas.
  */
 @Entity
 @Table(name = "tokens_recuperacion")
@@ -15,30 +15,30 @@ public class TokenRecuperacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Token criptográfico único que se enviará embebido en la URL del correo electrónico
+    // Token criptografico unico que se enviara embebido en la URL del correo electronico
     @Column(nullable = false, unique = true)
     private String tokenAcceso;
 
-    // Correo electrónico del usuario que solicita la recuperación de su cuenta
+    // Correo electronico del usuario que solicita la recuperacion de su cuenta
     @Column(nullable = false)
     private String correoUsuario;
 
-    // Fecha y hora exacta de expiración del token por motivos de seguridad (ej. 15 minutos)
+    // Fecha y hora exacta de expiracion del token por motivos de seguridad (ej. 15 minutos)
     @Column(nullable = false)
     private LocalDateTime fechaExpiracion;
 
     /**
-     * Constructor vacío predeterminado requerido por la especificación de JPA (Hibernate).
+     * Constructor vacio predeterminado requerido por la especificacion de JPA (Hibernate).
      */
     public TokenRecuperacion() {
     }
 
     /**
-     * Constructor principal para instanciar un nuevo token de recuperación con cálculo automático de expiración.
+     * Constructor principal para instanciar un nuevo token de recuperacion con calculo automatico de expiracion.
      * 
-     * @param tokenAcceso El token único generado.
+     * @param tokenAcceso El token unico generado.
      * @param correoUsuario El correo del usuario solicitante.
-     * @param minutosValidez El tiempo de vida útil expresado en minutos.
+     * @param minutosValidez El tiempo de vida util expresado en minutos.
      */
     public TokenRecuperacion(String tokenAcceso, String correoUsuario, int minutosValidez) {
         this.tokenAcceso = tokenAcceso;
@@ -46,9 +46,7 @@ public class TokenRecuperacion {
         this.fechaExpiracion = LocalDateTime.now().plusMinutes(minutosValidez);
     }
 
-    // =================================================================
-    // MÉTODOS GETTERS Y SETTERS (Convención camelCase)
-    // =================================================================
+    // Getters y setters
 
     public Long getId() {
         return id;

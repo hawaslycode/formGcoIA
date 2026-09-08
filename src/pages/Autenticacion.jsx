@@ -5,7 +5,7 @@ import { fetchConAuth } from "../api/clienteApi";
 
 
 /**
- * Íconos SVG inline para los inputs (evita dependencia de librerías externas).
+ * Iconos SVG inline para los inputs (evita dependencia de librerias externas).
  */
 const IconoCorreo = () => (
   <svg className="icono-input" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -47,8 +47,8 @@ const MARCAS_GCO = [
 ];
 
 /**
- * Componente para el inicio de sesión y registro de usuarios.
- * Diseño split-screen premium — lógica de negocio intacta.
+ * Componente para el inicio de sesion y registro de usuarios.
+ * Diseno split-screen premium — logica de negocio intacta.
  */
 export const Autenticacion = ({ alAutenticar }) => {
   const [esRegistro, establecerEsRegistro] = useState(false);
@@ -142,7 +142,7 @@ export const Autenticacion = ({ alAutenticar }) => {
   };
 
   /**
-   * Maneja la solicitud de recuperación de contraseña.
+   * Maneja la solicitud de recuperacion de contrasena.
    */
   const manejarRecuperacionContrasena = async () => {
     if (!correoElectronico) {
@@ -192,7 +192,7 @@ export const Autenticacion = ({ alAutenticar }) => {
   return (
     <div className="contenedor-autenticacion">
 
-      {/* ==================== PANEL IZQUIERDO — MARCA ==================== */}
+      {/* Panel izquierdo - marca */}
       <aside className="panel-marca">
         <img
           src={logoGco}
@@ -215,7 +215,7 @@ export const Autenticacion = ({ alAutenticar }) => {
         <div className="divisor-panel" />
       </aside>
 
-      {/* ==================== PANEL DERECHO — FORMULARIO ==================== */}
+      {/* Panel derecho - formulario */}
       <section className="panel-formulario">
         <div className="tarjeta-autenticacion">
 
@@ -282,7 +282,7 @@ export const Autenticacion = ({ alAutenticar }) => {
               </div>
             </div>
 
-            {/* Campo contraseña */}
+            {/* Campo contrasena */}
             <div className="grupo-input">
               <label htmlFor="contrasena">Contraseña</label>
               <div className="input-con-icono">
@@ -309,7 +309,7 @@ export const Autenticacion = ({ alAutenticar }) => {
               </div>
             </div>
 
-            {/* Enlace recuperar contraseña (solo en login) */}
+            {/* Enlace recuperar contrasena (solo en login) */}
             {!esRegistro && (
               <div className="contenedor-recuperar-contrasena">
                 <span
@@ -321,7 +321,7 @@ export const Autenticacion = ({ alAutenticar }) => {
               </div>
             )}
 
-            {/* Checkbox términos */}
+            {/* Checkbox terminos */}
             <div className="grupo-checkbox">
               <label className="etiqueta-checkbox">
                 <input
@@ -337,7 +337,7 @@ export const Autenticacion = ({ alAutenticar }) => {
               </label>
             </div>
 
-            {/* Botón principal */}
+            {/* Boton principal */}
             <button
               type="submit"
               id="boton-submit-auth"

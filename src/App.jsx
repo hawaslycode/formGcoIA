@@ -4,33 +4,33 @@ import { RegistroLealtad } from "./pages/RegistroLealtad";
 import { RestablecerContrasena } from "./pages/RestablecerContrasena";
 
 /**
- * Componente raíz de la aplicación.
- * Actúa como Guardián de Sesión utilizando Inicialización Perezosa (Lazy Initialization)
+ * Componente raiz de la aplicacion.
+ * Actua como Guardian de Sesion utilizando Inicializacion Perezosa (Lazy Initialization)
  * para maximizar el rendimiento y evitar renderizados en cascada.
- * Gestiona además el enrutamiento manual para las vistas públicas de recuperación de claves.
+ * Gestiona ademas el enrutamiento manual para las vistas publicas de recuperacion de claves.
  */
 export const App = () => {
   /**
-   * ESTADO GLOBAL DE USUARIO (Inicialización Perezosa)
-   * Pasamos una función anónima a useState. React ejecutará esta función
-   * de forma síncrona una única vez al instanciar el componente, interceptando
+   * ESTADO GLOBAL DE USUARIO (Inicializacion Perezosa)
+   * Pasamos una funcion anonima a useState. React ejecutara esta funcion
+   * de forma sincrona una unica vez al instanciar el componente, interceptando
    * las credenciales del Local Storage antes del primer renderizado.
    */
   const [usuarioActual, establecerUsuarioActual] = useState(() => {
     const tokenGuardado = localStorage.getItem("tokenAcceso");
     const correoGuardado = localStorage.getItem("correoUsuario");
 
-    // Si existen credenciales válidas, retornamos el objeto del usuario inmediatamente
+    // Si existen credenciales validas, retornamos el objeto del usuario inmediatamente
     if (tokenGuardado && correoGuardado) {
       return { correo: correoGuardado };
     }
     
-    // Si no hay sesión, el estado inicia en null
+    // Si no hay sesion, el estado inicia en null
     return null;
   });
 
   /**
-   * Función inyectada al componente de Autenticación para elevar el estado al autenticarse.
+   * Funcion inyectada al componente de Autenticacion para elevar el estado al autenticarse.
    * 
    * @param {Object} datosUsuario - Objeto que contiene el correo del usuario validado.
    */
@@ -39,8 +39,8 @@ export const App = () => {
   };
 
   /**
-   * Maneja el cierre de sesión seguro del usuario.
-   * Destruye el rastro criptográfico en la bóveda del navegador y purga el estado global.
+   * Maneja el cierre de sesion seguro del usuario.
+   * Destruye el rastro criptografico en la boveda del navegador y purga el estado global.
    */
   const manejarCierreSesion = () => {
     localStorage.removeItem("tokenAcceso");
@@ -48,7 +48,7 @@ export const App = () => {
     establecerUsuarioActual(null);
   };
 
-  // Detectamos si el usuario ingresó a través del enlace seguro enviado a su correo
+  // Detectamos si el usuario ingreso a traves del enlace seguro enviado a su correo
   const esRutaRecuperacion = window.location.pathname === "/restablecer-contrasena";
 
   if (esRutaRecuperacion) {
@@ -62,7 +62,7 @@ export const App = () => {
   return (
     <main>
       {/* 
-        Si usuarioActual tiene datos (leídos del localStorage o por login reciente), 
+        Si usuarioActual tiene datos (leidos del localStorage o por login reciente), 
         renderiza el sistema. Si es null, bloquea la ruta y muestra el Login. 
       */}
       {usuarioActual ? (

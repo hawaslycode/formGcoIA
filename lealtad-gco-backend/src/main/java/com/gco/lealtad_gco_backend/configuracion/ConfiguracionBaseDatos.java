@@ -11,8 +11,8 @@ import javax.sql.DataSource;
 import java.net.URI;
 
 /**
- * Configuración adaptativa del DataSource.
- * Soporta URLs estándar JDBC (jdbc:postgresql://...) y URLs nativas de plataformas 
+ * Configuracion adaptativa del DataSource.
+ * Soporta URLs estandar JDBC (jdbc:postgresql://...) y URLs nativas de plataformas 
  * Cloud como Render, Railway, Supabase o Neon (postgres://user:pass@host:port/db o postgresql://...).
  */
 @Configuration
@@ -36,7 +36,7 @@ public class ConfiguracionBaseDatos {
         String userProcesado = usuario;
         String passProcesado = contrasena;
 
-        // Si la URL viene en formato postgres:// o postgresql:// (común en Render / Neon / Supabase)
+        // Si la URL viene en formato postgres:// o postgresql:// (comun en Render / Neon / Supabase)
         if (urlProcesada.startsWith("postgres://") || urlProcesada.startsWith("postgresql://")) {
             try {
                 URI uri = new URI(urlProcesada);

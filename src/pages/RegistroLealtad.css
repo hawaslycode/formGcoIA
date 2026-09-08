@@ -1,8 +1,6 @@
-/* ================================================================== */
-/* REGISTRO DE LEALTAD — LAYOUT DASHBOARD PROFESIONAL                 */
-/* ================================================================== */
+/* Registro de lealtad - layout dashboard profesional */
 
-/* ======================== ESTRUCTURA RAÍZ ========================= */
+/* Estructura raiz */
 
 .pagina-lealtad {
   min-height: 100vh;
@@ -11,7 +9,7 @@
   flex-direction: column;
 }
 
-/* ======================== NAVBAR SUPERIOR ========================= */
+/* Navbar superior */
 
 .navbar-lealtad {
   position: sticky;
@@ -101,7 +99,7 @@
   box-shadow: var(--sombra-rojo);
 }
 
-/* ======================== HERO BANNER ========================= */
+/* Hero banner */
 
 .hero-lealtad {
   background: var(--gradiente-azul-alt);
@@ -178,7 +176,7 @@
   z-index: 1;
 }
 
-/* ======================== CUERPO PRINCIPAL ========================= */
+/* Cuerpo principal */
 
 .cuerpo-lealtad {
   flex: 1;
@@ -187,7 +185,7 @@
   justify-content: center;
 }
 
-/* ======================== TARJETA DEL FORMULARIO ========================= */
+/* Tarjeta del formulario */
 
 .tarjeta-formulario-lealtad {
   background: var(--color-blanco);
@@ -200,7 +198,7 @@
   animation: fadeInUp 0.5s ease both;
 }
 
-/* ======================== SECCIONES DEL FORMULARIO ========================= */
+/* Secciones del formulario */
 
 .seccion-formulario {
   padding: 28px 36px;
@@ -251,7 +249,7 @@
   letter-spacing: 0.3px;
 }
 
-/* ======================== GRID DE INPUTS ========================= */
+/* Grid de inputs */
 
 .fila-formulario {
   display: grid;
@@ -340,7 +338,7 @@
   pointer-events: none;
 }
 
-/* ======================== SECCIÓN MARCA ========================= */
+/* Seccion de marca */
 
 .grid-marcas-seleccion {
   display: grid;
@@ -417,12 +415,12 @@
   letter-spacing: 0.4px;
 }
 
-/* Select de marca (fallback cuando el grid no está en uso) */
+/* Select de marca (fallback cuando el grid no esta en uso) */
 .select-marca-contenedor {
   margin-top: 0;
 }
 
-/* ======================== BENEFICIOS ========================= */
+/* Beneficios */
 
 .contenedor-beneficios-marca {
   background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%);
@@ -485,7 +483,7 @@
   line-height: 1.5;
 }
 
-/* ======================== FOOTER DEL FORMULARIO ========================= */
+/* Footer del formulario */
 
 .footer-formulario {
   padding: 24px 36px;
@@ -545,13 +543,13 @@
   box-shadow: var(--sombra-rojo);
 }
 
-/* ======================== ALERTAS EN FORMULARIO ========================= */
+/* Alertas en formulario */
 
 .area-alertas {
   padding: 0 36px;
 }
 
-/* ======================== RESPONSIVE ========================= */
+/* Adaptacion responsive */
 
 @media (max-width: 768px) {
   .navbar-lealtad {

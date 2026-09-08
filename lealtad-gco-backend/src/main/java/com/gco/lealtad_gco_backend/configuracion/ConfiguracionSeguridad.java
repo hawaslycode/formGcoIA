@@ -20,9 +20,9 @@ import java.util.List;
 
 
 /**
- * Clase de configuración principal de Spring Security.
- * Gestiona la política de sesiones stateless, la encriptación BCrypt,
- * el filtro de autenticación JWT y las reglas de acceso público/protegido.
+ * Clase de configuracion principal de Spring Security.
+ * Gestiona la politica de sesiones stateless, la encriptacion BCrypt,
+ * el filtro de autenticacion JWT y las reglas de acceso publico/protegido.
  */
 @Configuration
 @EnableWebSecurity
@@ -31,14 +31,14 @@ public class ConfiguracionSeguridad {
     private final FiltroAutenticacionJwt filtroAutenticacionJwt;
 
     /**
-     * Inyección del filtro JWT personalizado mediante el constructor de la clase.
+     * Inyeccion del filtro JWT personalizado mediante el constructor de la clase.
      */
     public ConfiguracionSeguridad(FiltroAutenticacionJwt filtroAutenticacionJwt) {
         this.filtroAutenticacionJwt = filtroAutenticacionJwt;
     }
 
     /**
-     * Define el bean para la codificación y verificación de contraseñas utilizando BCrypt.
+     * Define el bean para la codificacion y verificacion de contrasenas utilizando BCrypt.
      */
     @Bean
     public PasswordEncoder codificadorContrasenas() {
@@ -46,7 +46,7 @@ public class ConfiguracionSeguridad {
     }
 
     /**
-     * Expone el gestor de autenticación requerido para validar credenciales nativas.
+     * Expone el gestor de autenticacion requerido para validar credenciales nativas.
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuracionAutenticacion) throws Exception {
@@ -55,13 +55,13 @@ public class ConfiguracionSeguridad {
 
     /**
      * Configura la cadena de filtros de seguridad HTTP, deshabilitando CSRF para APIs REST,
-     * estableciendo sesiones stateless, permitiendo el acceso público al módulo de autenticación/recuperación
+     * estableciendo sesiones stateless, permitiendo el acceso publico al modulo de autenticacion/recuperacion
      * e integrando el filtro JWT para el resto de rutas privadas.
      */
     @Bean
     public SecurityFilterChain filtrarCadenaSeguridad(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(crearFuenteConfiguracionCors())) // Activamos CORS aquí
+            .cors(cors -> cors.configurationSource(crearFuenteConfiguracionCors())) // Activamos CORS aqui
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(autorizacion -> autorizacion
@@ -75,22 +75,22 @@ public class ConfiguracionSeguridad {
     }
 
     /**
-     * Define los orígenes, cabeceras y métodos HTTP permitidos para evitar bloqueos CORS.
+     * Define los origenes, cabeceras y metodos HTTP permitidos para evitar bloqueos CORS.
      */
     @Bean
     public CorsConfigurationSource crearFuenteConfiguracionCors() {
         CorsConfiguration configuracionCors = new CorsConfiguration();
         
-        // Permitimos el origen local de React y cualquier dominio de Vercel/producción
+        // Permitimos el origen local de React y cualquier dominio de Vercel/produccion
         configuracionCors.setAllowedOriginPatterns(List.of("*"));
         
-        // Métodos HTTP permitidos para las transacciones REST
+        // Metodos HTTP permitidos para las transacciones REST
         configuracionCors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         
         // Permitimos todas las cabeceras, incluyendo 'Authorization' (fundamental para el JWT)
         configuracionCors.setAllowedHeaders(List.of("*"));
         
-        // Permitimos el envío de credenciales y tokens de sesión
+        // Permitimos el envio de credenciales y tokens de sesion
         configuracionCors.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource origenConfiguracion = new UrlBasedCorsConfigurationSource();

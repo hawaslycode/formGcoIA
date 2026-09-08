@@ -1,15 +1,13 @@
-/* ================================================================== */
-/* AUTENTICACIÓN — SPLIT-SCREEN PREMIUM                                */
-/* ================================================================== */
+/* Autenticacion - split-screen premium */
 
-/* Layout raíz: dos columnas */
+/* Layout raiz: dos columnas */
 .contenedor-autenticacion {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
 }
 
-/* ======================== PANEL IZQUIERDO ========================= */
+/* Panel izquierdo */
 
 .panel-marca {
   background: var(--gradiente-azul-alt);
@@ -23,7 +21,7 @@
   animation: slideInLeft 0.6s ease both;
 }
 
-/* Círculos decorativos de fondo */
+/* Circulos decorativos de fondo */
 .panel-marca::before {
   content: "";
   position: absolute;
@@ -124,7 +122,7 @@
   z-index: 1;
 }
 
-/* ======================== PANEL DERECHO — FORMULARIO ========================= */
+/* Panel derecho - formulario */
 
 .panel-formulario {
   display: flex;
@@ -159,7 +157,7 @@
   object-fit: contain;
 }
 
-/* Títulos */
+/* Titulos */
 .titulo-autenticacion {
   font-family: var(--fuente-titulos);
   font-size: 1.5rem;
@@ -178,7 +176,7 @@
   line-height: 1.5;
 }
 
-/* ======================== INPUTS ========================= */
+/* Inputs del formulario */
 
 .grupo-input {
   margin-bottom: 18px;
@@ -230,7 +228,7 @@
   outline: none;
 }
 
-/* FIX CRÍTICO: Los inputs con ícono izquierdo deben tener padding-left suficiente para no sobreponer texto e icono */
+/* FIX CRITICO: Los inputs con icono izquierdo deben tener padding-left suficiente para no sobreponer texto e icono */
 .input-con-icono input,
 .grupo-input .input-con-icono input {
   padding-left: 44px !important;
@@ -252,7 +250,7 @@
   color: #b0b8c4;
 }
 
-/* Toggle contraseña */
+/* Toggle contrasena */
 .boton-toggle-password {
   position: absolute;
   right: 12px;
@@ -274,7 +272,7 @@
   color: var(--color-azul-oscuro);
 }
 
-/* Recuperar contraseña */
+/* Recuperar contrasena */
 .contenedor-recuperar-contrasena {
   display: flex;
   justify-content: flex-end;
@@ -296,7 +294,7 @@
   text-decoration: underline;
 }
 
-/* ======================== CHECKBOX ========================= */
+/* Checkbox de terminos */
 
 .grupo-checkbox {
   margin-bottom: 22px;
@@ -345,7 +343,7 @@
   transform: rotate(45deg);
 }
 
-/* ======================== BOTÓN PRINCIPAL ========================= */
+/* Boton principal */
 
 .boton-principal-auth {
   width: 100%;
@@ -375,7 +373,7 @@
   transform: scale(0.98);
 }
 
-/* ======================== ENLACE DE MODO ========================= */
+/* Enlace de cambio de modo */
 
 .enlace-cambio-modo {
   text-align: center;
@@ -414,9 +412,7 @@
   background: var(--color-gris-borde);
 }
 
-/* ================================================================== */
-/* RESPONSIVE — MOBILE                                                 */
-/* ================================================================== */
+/* Responsive - mobile */
 
 @media (max-width: 900px) {
   .contenedor-autenticacion {
@@ -438,7 +434,7 @@
     box-shadow: var(--sombra-md);
   }
 
-  /* En mobile sí mostramos el logo dentro de la tarjeta */
+  /* En mobile si mostramos el logo dentro de la tarjeta */
   .contenedor-logo-auth {
     display: flex;
   }

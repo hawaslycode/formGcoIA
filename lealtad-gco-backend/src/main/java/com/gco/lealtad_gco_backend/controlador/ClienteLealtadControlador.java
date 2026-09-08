@@ -23,10 +23,10 @@ public class ClienteLealtadControlador {
     }
 
     /**
-     * Endpoint GET que facilita la precarga automática de datos en el frontend de
+     * Endpoint GET que facilita la precarga automatica de datos en el frontend de
      * React.
      * 
-     * @param correoElectronico Correo asociado a la sesión del usuario.
+     * @param correoElectronico Correo asociado a la sesion del usuario.
      * @return Los datos del cliente registrados previamente.
      */
     @GetMapping("/cliente/correo/{correoElectronico}")
@@ -47,8 +47,8 @@ public class ClienteLealtadControlador {
     }
 
     /**
-     * Endpoint POST que ejecuta lógica de 'Upsert' (Actualización si existe,
-     * Inserción si es nuevo).
+     * Endpoint POST que ejecuta logica de 'Upsert' (Actualizacion si existe,
+     * Insercion si es nuevo).
      */
     @PostMapping("/registrar")
     public ResponseEntity<?> registrarOActualizarPerfil(@RequestBody ClienteLealtad datosFormulario) {

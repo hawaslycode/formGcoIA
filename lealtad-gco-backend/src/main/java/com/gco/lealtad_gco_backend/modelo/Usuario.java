@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  * Entidad JPA que representa la tabla 'usuarios' en PostgreSQL.
- * Almacena las credenciales nativas (correo y contraseña) para el acceso al
+ * Almacena las credenciales nativas (correo y contrasena) para el acceso al
  * sistema.
  */
 @Entity
@@ -26,15 +26,8 @@ public class Usuario {
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    /**
-     * Constructor vacío requerido por la especificación de JPA.
-     */
     public Usuario() {
     }
-
-    // ===================================================================
-    // MÉTODOS ACCESORES (GETTERS Y SETTERS) EN CAMELCASE
-    // ===================================================================
 
     public Long getIdUsuario() {
         return idUsuario;

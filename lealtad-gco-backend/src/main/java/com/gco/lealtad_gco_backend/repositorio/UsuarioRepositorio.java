@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
     /**
-     * Busca un usuario registrado mediante su correo electrónico.
+     * Busca un usuario registrado mediante su correo electronico.
      * 
      * @param correoElectronico El correo a validar.
      * @return Objeto contenedor opcional con los datos del usuario.

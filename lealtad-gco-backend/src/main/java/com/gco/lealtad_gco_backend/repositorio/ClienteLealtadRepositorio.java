@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ClienteLealtadRepositorio extends JpaRepository<ClienteLealtad, Long> {
 
     /**
-     * Permite precargar la información consultando por el correo de la sesión
+     * Permite precargar la informacion consultando por el correo de la sesion
      * activa.
      */
     Optional<ClienteLealtad> findByCorreoElectronico(String correoElectronico);

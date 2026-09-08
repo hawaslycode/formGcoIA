@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 /**
  * Entidad JPA que mapea la tabla 'clientes_lealtad'.
- * Contiene la información del perfil del cliente y sus beneficios asociados.
+ * Contiene la informacion del perfil del cliente y sus beneficios asociados.
  */
 @Entity
 @Table(name = "clientes_lealtad")
@@ -17,8 +17,6 @@ public class ClienteLealtad {
     @Column(name = "id_cliente")
     private Long idCliente;
 
-    // Se asocia directamente al correo del inicio de sesión para facilitar la
-    // precarga
     @Column(name = "correo_electronico", nullable = false, unique = true, length = 100)
     private String correoElectronico;
 
@@ -57,10 +55,6 @@ public class ClienteLealtad {
 
     public ClienteLealtad() {
     }
-
-    // ===================================================================
-    // MÉTODOS ACCESORES (GETTERS Y SETTERS) EN CAMELCASE
-    // ===================================================================
 
     public Long getIdCliente() {
         return idCliente;

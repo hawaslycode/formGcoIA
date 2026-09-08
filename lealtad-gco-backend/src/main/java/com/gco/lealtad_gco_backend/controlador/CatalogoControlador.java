@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controlador REST para el suministro de catálogos estáticos (Geografía,
+ * Controlador REST para el suministro de catalogos estaticos (Geografia,
  * Marcas, Documentos).
  */
 @RestController

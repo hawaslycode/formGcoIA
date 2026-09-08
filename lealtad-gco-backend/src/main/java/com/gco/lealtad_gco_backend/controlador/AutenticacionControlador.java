@@ -14,7 +14,7 @@ import java.util.Optional;
 
 /**
  * Controlador REST para el manejo de credenciales nativas.
- * Ahora integra seguridad BCrypt y emisión de JSON Web Tokens (JWT).
+ * Ahora integra seguridad BCrypt y emision de JSON Web Tokens (JWT).
  */
 @RestController
 @RequestMapping("/api/autenticacion")
@@ -26,11 +26,9 @@ public class AutenticacionControlador {
     private final UtilidadJwt utilidadJwt;
 
     /**
-     * Inyección de dependencias mediante el constructor.
-     * 
      * @param repositorioDeUsuarios Interfaz para interactuar con PostgreSQL.
-     * @param codificadorDeContrasenas Herramienta de encriptación BCrypt.
-     * @param utilidadJwt Componente para la generación y validación de tokens.
+     * @param codificadorDeContrasenas Herramienta de encriptacion BCrypt.
+     * @param utilidadJwt Componente para la generacion y validacion de tokens.
      */
     public AutenticacionControlador(UsuarioRepositorio repositorioDeUsuarios, 
                                     PasswordEncoder codificadorDeContrasenas,
@@ -41,7 +39,7 @@ public class AutenticacionControlador {
     }
 
     /**
-     * Registra un nuevo usuario encriptando su contraseña antes de la persistencia.
+     * Registra un nuevo usuario encriptando su contrasena antes de la persistencia.
      */
     @PostMapping("/registrar")
     public ResponseEntity<?> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
@@ -65,7 +63,7 @@ public class AutenticacionControlador {
     }
 
     /**
-     * Valida el acceso comparando el hash de la contraseña y emite un JWT.
+     * Valida el acceso comparando el hash de la contrasena y emite un JWT.
      */
     @PostMapping("/login")
     public ResponseEntity<?> iniciarSesion(@RequestBody Usuario datosDeAcceso) {
@@ -81,12 +79,9 @@ public class AutenticacionControlador {
                 );
 
                 if (esContrasenaCorrecta) {
-                    // =========================================================
-                    // LÓGICA DE EMISIÓN DE JWT
-                    // =========================================================
                     String tokenGenerado = utilidadJwt.generarToken(usuarioValidado.getCorreoElectronico());
                     
-                    // Empaquetamos el usuario y el token en un mapa (JSON dinámico)
+                    // Empaquetamos el usuario y el token en la respuesta JSON
                     Map<String, Object> respuestaExitosa = new HashMap<>();
                     respuestaExitosa.put("usuario", usuarioValidado);
                     respuestaExitosa.put("tokenAcceso", tokenGenerado);

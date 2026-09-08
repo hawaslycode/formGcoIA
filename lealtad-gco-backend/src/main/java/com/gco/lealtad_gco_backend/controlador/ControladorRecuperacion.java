@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * Controlador REST encargado de exponer los puntos de acceso públicos 
- * para iniciar la recuperación de credenciales y actualizar la contraseña de usuario.
+ * Controlador REST encargado de exponer los puntos de acceso publicos 
+ * para iniciar la recuperacion de credenciales y actualizar la contrasena de usuario.
  */
 @RestController
 @RequestMapping("/api/autenticacion")
@@ -17,18 +17,15 @@ public class ControladorRecuperacion {
 
     private final ServicioRecuperacion servicioRecuperacion;
 
-    /**
-     * Inyección del servicio de negocio mediante el constructor.
-     */
     public ControladorRecuperacion(ServicioRecuperacion servicioRecuperacion) {
         this.servicioRecuperacion = servicioRecuperacion;
     }
 
     /**
-     * Endpoint POST para recibir el correo electrónico y disparar la generación y envío del token.
+     * Endpoint POST para recibir el correo electronico y disparar la generacion y envio del token.
      * 
      * @param cargaUtil Mapa que contiene la clave "correoElectronico".
-     * @return Respuesta HTTP indicando éxito o error al procesar.
+     * @return Respuesta HTTP indicando exito o error al procesar.
      */
     @PostMapping("/olvide-contrasena")
     public ResponseEntity<String> solicitarRecuperacion(@RequestBody Map<String, String> cargaUtil) {
@@ -45,10 +42,10 @@ public class ControladorRecuperacion {
     }
 
     /**
-     * Endpoint POST para validar el token de acceso y aplicar el cambio definitivo de contraseña.
+     * Endpoint POST para validar el token de acceso y aplicar el cambio definitivo de contrasena.
      * 
      * @param cargaUtil Mapa que contiene "tokenAcceso" y "nuevaContrasena".
-     * @return Respuesta HTTP con el estado de la actualización o mensaje de fallo por validación.
+     * @return Respuesta HTTP con el estado de la actualizacion o mensaje de fallo por validacion.
      */
     @PostMapping("/cambiar-contrasena")
     public ResponseEntity<String> actualizarContrasena(@RequestBody Map<String, String> cargaUtil) {

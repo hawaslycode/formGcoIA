@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Servicio encargado de orquestar la lógica de negocio para la recuperación de contraseñas.
- * Gestiona la generación de tokens seguros, el despacho de correos SMTP y el cambio de claves con BCrypt.
+ * Servicio encargado de orquestar la logica de negocio para la recuperacion de contrasenas.
+ * Gestiona la generacion de tokens seguros, el despacho de correos SMTP y el cambio de claves con BCrypt.
  */
 @Service
 public class ServicioRecuperacion {
@@ -30,7 +30,7 @@ public class ServicioRecuperacion {
     private String urlFrontend;
 
     /**
-     * Inyección de dependencias mediante el constructor de la clase.
+     * Inyeccion de dependencias mediante el constructor de la clase.
      */
     public ServicioRecuperacion(TokenRecuperacionRepositorio tokenRecuperacionRepositorio,
             JavaMailSender despachadorDeCorreos,
@@ -43,10 +43,10 @@ public class ServicioRecuperacion {
     }
 
     /**
-     * Procesa la solicitud inicial de recuperación: depura tokens viejos, genera un nuevo UUID,
-     * almacena el registro en PostgreSQL y envía las instrucciones al correo del usuario[cite: 2].
+     * Procesa la solicitud inicial de recuperacion: depura tokens viejos, genera un nuevo UUID,
+     * almacena el registro en PostgreSQL y envia las instrucciones al correo del usuario[cite: 2].
      * 
-     * @param correoUsuario Correo electrónico del usuario que solicita la recuperación.
+     * @param correoUsuario Correo electronico del usuario que solicita la recuperacion.
      */
     @Transactional
     public void procesarSolicitudRecuperacion(String correoUsuario) {
@@ -63,7 +63,7 @@ public class ServicioRecuperacion {
         // 2. Limpiamos cualquier token previo asociado a este correo
         tokenRecuperacionRepositorio.deleteByCorreoUsuario(correoUsuario);
 
-        // 3. Generamos un identificador criptográfico único (UUID)
+        // 3. Generamos un identificador criptografico unico (UUID)
         String tokenGenerado = UUID.randomUUID().toString();
 
         // 4. Creamos el token con una vigencia estricta de 15 minutos
@@ -72,7 +72,7 @@ public class ServicioRecuperacion {
         // 5. Guardamos la entidad en la base de datos PostgreSQL
         tokenRecuperacionRepositorio.save(nuevoToken);
 
-        // 6. Despachamos el correo electrónico mediante SMTP con resguardo (fallback) en consola
+        // 6. Despachamos el correo electronico mediante SMTP con resguardo (fallback) en consola
         try {
             enviarCorreoRecuperacion(correoUsuario, tokenGenerado);
         } catch (Exception excepcionSmtp) {
@@ -82,10 +82,10 @@ public class ServicioRecuperacion {
     }
 
     /**
-     * Construye la estructura del mensaje de correo electrónico con el enlace de restablecimiento seguro.
+     * Construye la estructura del mensaje de correo electronico con el enlace de restablecimiento seguro.
      * 
      * @param destinatario Correo destino del usuario.
-     * @param token Token criptográfico único generado.
+     * @param token Token criptografico unico generado.
      */
     private void enviarCorreoRecuperacion(String destinatario, String token) {
         String enlaceRecuperacion = urlFrontend + "/restablecer-contrasena?token=" + token;
@@ -107,10 +107,10 @@ public class ServicioRecuperacion {
 
     /**
      * Valida la autenticidad y vigencia del token recibido, busca al usuario en la base de datos,
-     * cifra la nueva contraseña con BCrypt, actualiza el registro y elimina el token de un solo uso[cite: 2].
+     * cifra la nueva contrasena con BCrypt, actualiza el registro y elimina el token de un solo uso[cite: 2].
      * 
-     * @param tokenAcceso El token único proveniente de la URL del frontend.
-     * @param nuevaContrasena La nueva contraseña en texto plano introducida por el usuario.
+     * @param tokenAcceso El token unico proveniente de la URL del frontend.
+     * @param nuevaContrasena La nueva contrasena en texto plano introducida por el usuario.
      */
     @Transactional
     public void cambiarContrasenaConToken(String tokenAcceso, String nuevaContrasena) {
@@ -124,11 +124,11 @@ public class ServicioRecuperacion {
             throw new IllegalArgumentException("El enlace de recuperación ha expirado. Por favor, solicite uno nuevo.");
         }
 
-        // 3. Localizamos al usuario dueño del correo asociado al token
+        // 3. Localizamos al usuario dueno del correo asociado al token
         Usuario usuario = usuarioRepositorio.findByCorreoElectronico(tokenGuardado.getCorreoUsuario())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado en el sistema."));
 
-        // 4. Encriptamos la nueva contraseña utilizando BCrypt
+        // 4. Encriptamos la nueva contrasena utilizando BCrypt
         usuario.setContrasena(codificadorContrasenas.encode(nuevaContrasena));
         
         // 5. Persistimos los cambios del usuario

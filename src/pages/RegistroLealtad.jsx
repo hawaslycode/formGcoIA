@@ -3,7 +3,7 @@ import "./RegistroLealtad.css";
 import logoGco from "../assets/gcologo.png";
 import { fetchConAuth } from "../api/clienteApi";
 
-// Importación de logos oficiales de las marcas
+// Importacion de logos oficiales de las marcas
 import logoAmericanino from "../assets/marcas/americanino.png";
 import logoAmericanEagle from "../assets/marcas/american-eagle.png";
 import logoChevignon from "../assets/marcas/chevignon.png";
@@ -51,9 +51,7 @@ const beneficiosPorMarcaSimulados = {
   ],
 };
 
-/* =================================================================== */
-/* COMPONENTES DE ÍCONOS SVG VECTORIALES                             */
-/* =================================================================== */
+// Componentes de iconos SVG vectoriales
 
 const IconoSalir = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -165,26 +163,18 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
       };
 
       try {
-        const resTipos = await fetchConAuth(
-          "/api/catalogos/tipos-identificacion",
-          configuracionPeticion,
-        );
-        if (resTipos.ok && estaMontado)
-          establecerListaTiposId(await resTipos.json());
+        const resTipos = await fetchConAuth("/api/catalogos/tipos-identificacion", configuracionPeticion);
+        if (resTipos.ok && estaMontado) establecerListaTiposId(await resTipos.json());
 
-        const resPaises = await fetchConAuth(
-          "/api/catalogos/paises",
-          configuracionPeticion,
-        );
-        if (resPaises.ok && estaMontado)
-          establecerListaPaises(await resPaises.json());
+        const resMarcas = await fetchConAuth("/api/catalogos/marcas", configuracionPeticion);
+        if (resMarcas.ok && estaMontado) establecerListaMarcas(await resMarcas.json());
 
-        const resMarcas = await fetchConAuth(
-          "/api/catalogos/marcas",
-          configuracionPeticion,
-        );
-        if (resMarcas.ok && estaMontado)
-          establecerListaMarcas(await resMarcas.json());
+        const resPaises = await fetchConAuth("/api/catalogos/paises", configuracionPeticion);
+        let paisesCargados = [];
+        if (resPaises.ok && estaMontado) {
+          paisesCargados = await resPaises.json();
+          establecerListaPaises(paisesCargados);
+        }
 
         if (usuarioActual?.correo) {
           const respuestaCliente = await fetchConAuth(
@@ -194,6 +184,42 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
 
           if (respuestaCliente.ok && estaMontado) {
             const datosCliente = await respuestaCliente.json();
+            
+            // ----------------------------------------------------
+            // Lógica de Hidratación (Carga inicial encadenada)
+            // ----------------------------------------------------
+            let pId = "";
+            let dId = "";
+
+            if (datosCliente.pais && paisesCargados.length > 0) {
+              const paisObj = paisesCargados.find((p) => p.nombre === datosCliente.pais);
+              if (paisObj) {
+                pId = String(paisObj.id);
+                establecerPaisSeleccionadoId(pId);
+
+                // Cargar departamentos sincrónicamente para la hidratación
+                const resDep = await fetchConAuth(`/api/catalogos/departamentos/${pId}`, configuracionPeticion);
+                if (resDep.ok && estaMontado) {
+                  const deps = await resDep.json();
+                  establecerListaDepartamentos(deps);
+
+                  if (datosCliente.departamento) {
+                    const depObj = deps.find((d) => d.nombre === datosCliente.departamento);
+                    if (depObj) {
+                      dId = String(depObj.id);
+                      establecerDepartamentoSeleccionadoId(dId);
+
+                      // Cargar ciudades sincrónicamente
+                      const resCiu = await fetchConAuth(`/api/catalogos/ciudades/${dId}`, configuracionPeticion);
+                      if (resCiu.ok && estaMontado) {
+                        establecerListaCiudades(await resCiu.json());
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
             establecerDatosFormulario({
               tipoIdentificacion: datosCliente.tipoIdentificacion || "",
               numeroIdentificacion: datosCliente.numeroIdentificacion || "",
@@ -220,8 +246,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
           }
         }
       } catch (error) {
-        if (estaMontado)
-          console.error("Error al inicializar la vista de lealtad:", error);
+        if (estaMontado) console.error("Error al inicializar la vista de lealtad:", error);
       }
     };
 
@@ -230,67 +255,60 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
     return () => { estaMontado = false; };
   }, [usuarioActual]);
 
-  /**
-   * 2. EFECTO SECUNDARIO: Cargar departamentos dependientes del país.
-   */
-  useEffect(() => {
-    let estaMontado = true;
-    const cargarDepartamentos = async () => {
+  const manejarCambioPais = async (e) => {
+    const pId = e.target.value;
+    establecerPaisSeleccionadoId(pId);
+    establecerDepartamentoSeleccionadoId("");
+    establecerListaCiudades([]);
+    
+    const paisObj = listaPaises.find((p) => String(p.id) === String(pId));
+    establecerDatosFormulario((prev) => ({ 
+      ...prev, 
+      pais: paisObj ? paisObj.nombre : "", 
+      departamento: "", 
+      ciudad: "" 
+    }));
+
+    if (pId) {
       const tokenDeAcceso = localStorage.getItem("tokenAcceso");
-      if (paisSeleccionadoId && tokenDeAcceso) {
-        try {
-          const respuesta = await fetchConAuth(
-            `/api/catalogos/departamentos/${paisSeleccionadoId}`,
-            { method: "GET", headers: { Authorization: `Bearer ${tokenDeAcceso}` } },
-          );
-
-          if (respuesta.ok && estaMontado) {
-            establecerListaDepartamentos(await respuesta.json());
-            const paisObj = listaPaises.find((p) => String(p.id) === String(paisSeleccionadoId));
-            if (paisObj) {
-              establecerDatosFormulario((prev) => ({ ...prev, pais: paisObj.nombre }));
-            }
-          }
-        } catch (error) {
-          if (estaMontado) console.error("Error al cargar departamentos:", error);
-        }
+      try {
+        const res = await fetchConAuth(`/api/catalogos/departamentos/${pId}`, {
+          method: "GET", headers: { Authorization: `Bearer ${tokenDeAcceso}` }
+        });
+        if (res.ok) establecerListaDepartamentos(await res.json());
+      } catch (error) {
+        console.error("Error al cargar departamentos:", error);
       }
-    };
+    } else {
+      establecerListaDepartamentos([]);
+    }
+  };
 
-    cargarDepartamentos();
-    return () => { estaMontado = false; };
-  }, [paisSeleccionadoId, listaPaises]);
+  const manejarCambioDepartamento = async (e) => {
+    const dId = e.target.value;
+    establecerDepartamentoSeleccionadoId(dId);
+    
+    const depObj = listaDepartamentos.find((d) => String(d.id) === String(dId));
+    establecerDatosFormulario((prev) => ({ 
+      ...prev, 
+      departamento: depObj ? depObj.nombre : "", 
+      ciudad: "" 
+    }));
 
-  /**
-   * 3. EFECTO TRES: Cargar ciudades dependientes del departamento.
-   */
-  useEffect(() => {
-    let estaMontado = true;
-    const cargarCiudades = async () => {
+    if (dId) {
       const tokenDeAcceso = localStorage.getItem("tokenAcceso");
-      if (departamentoSeleccionadoId && tokenDeAcceso) {
-        try {
-          const respuesta = await fetchConAuth(
-            `/api/catalogos/ciudades/${departamentoSeleccionadoId}`,
-            { method: "GET", headers: { Authorization: `Bearer ${tokenDeAcceso}` } },
-          );
-
-          if (respuesta.ok && estaMontado) {
-            establecerListaCiudades(await respuesta.json());
-            const depObj = listaDepartamentos.find((d) => String(d.id) === String(departamentoSeleccionadoId));
-            if (depObj) {
-              establecerDatosFormulario((prev) => ({ ...prev, departamento: depObj.nombre }));
-            }
-          }
-        } catch (error) {
-          if (estaMontado) console.error("Error al cargar ciudades:", error);
-        }
+      try {
+        const res = await fetchConAuth(`/api/catalogos/ciudades/${dId}`, {
+          method: "GET", headers: { Authorization: `Bearer ${tokenDeAcceso}` }
+        });
+        if (res.ok) establecerListaCiudades(await res.json());
+      } catch (error) {
+        console.error("Error al cargar ciudades:", error);
       }
-    };
-
-    cargarCiudades();
-    return () => { estaMontado = false; };
-  }, [departamentoSeleccionadoId, listaDepartamentos]);
+    } else {
+      establecerListaCiudades([]);
+    }
+  };
 
   const listaBeneficios = datosFormulario.idMarca
     ? beneficiosPorMarcaSimulados[datosFormulario.idMarca] || []
@@ -302,7 +320,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
   };
 
   /**
-   * Maneja el envío del formulario hacia el backend.
+   * Maneja el envio del formulario hacia el backend.
    */
   const manejarEnvioFormulario = async (evento) => {
     evento.preventDefault();
@@ -359,7 +377,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
   return (
     <div className="pagina-lealtad">
 
-      {/* ==================== NAVBAR ==================== */}
+      {/* Navbar */}
       <nav className="navbar-lealtad">
         <div className="navbar-logo-area">
           <img src={logoGco} alt="GCO" className="navbar-logo" />
@@ -383,7 +401,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
         </div>
       </nav>
 
-      {/* ==================== HERO BANNER ==================== */}
+      {/* Hero banner */}
       <header className="hero-lealtad">
         <div className="hero-badge">
           <IconoEstrella /> Programa Exclusivo
@@ -396,7 +414,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
         </p>
       </header>
 
-      {/* ==================== CUERPO ==================== */}
+      {/* Cuerpo principal */}
       <main className="cuerpo-lealtad">
         <form
           className="tarjeta-formulario-lealtad"
@@ -419,7 +437,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             </div>
           )}
 
-          {/* ======== SECCIÓN 1: IDENTIFICACIÓN ======== */}
+          {/* Seccion 1: Identificacion */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
               <div className="icono-seccion">
@@ -463,7 +481,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             </div>
           </section>
 
-          {/* ======== SECCIÓN 2: DATOS PERSONALES ======== */}
+          {/* Seccion 2: Datos personales */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
               <div className="icono-seccion">
@@ -513,7 +531,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             </div>
           </section>
 
-          {/* ======== SECCIÓN 3: UBICACIÓN ======== */}
+          {/* Seccion 3: Ubicacion */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
               <div className="icono-seccion">
@@ -529,12 +547,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
                   <select
                     id="paisSeleccionado"
                     value={paisSeleccionadoId}
-                    onChange={(e) => {
-                      establecerPaisSeleccionadoId(e.target.value);
-                      establecerDepartamentoSeleccionadoId("");
-                      establecerListaCiudades([]);
-                      establecerDatosFormulario((prev) => ({ ...prev, departamento: "", ciudad: "" }));
-                    }}
+                    onChange={manejarCambioPais}
                     required
                   >
                     <option value="">Seleccione un país...</option>
@@ -552,11 +565,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
                   <select
                     id="departamentoSeleccionado"
                     value={departamentoSeleccionadoId}
-                    onChange={(e) => {
-                      establecerDepartamentoSeleccionadoId(e.target.value);
-                      establecerListaCiudades([]);
-                      establecerDatosFormulario((prev) => ({ ...prev, ciudad: "" }));
-                    }}
+                    onChange={manejarCambioDepartamento}
                     required
                     disabled={!paisSeleccionadoId}
                   >
@@ -606,7 +615,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             </div>
           </section>
 
-          {/* ======== SECCIÓN 4: SELECCIÓN DE MARCA ======== */}
+          {/* Seccion 4: Seleccion de marca */}
           <section className="seccion-formulario">
             <div className="cabecera-seccion">
               <div className="icono-seccion">
@@ -657,7 +666,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
                 })}
               </div>
             ) : (
-              /* Fallback: select estándar si aún no cargaron las marcas */
+              /* Fallback: select estandar si aun no cargaron las marcas */
               <div className="grupo-input select-marca-contenedor">
                 <label htmlFor="idMarca">Marca a la que desea registrarse</label>
                 <div className="wrapper-select">
@@ -682,7 +691,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             />
           </section>
 
-          {/* ======== BENEFICIOS DE MARCA ======== */}
+          {/* Beneficios de marca */}
           {listaBeneficios.length > 0 && (
             <div className="contenedor-beneficios-marca">
               <div className="cabecera-beneficios">
@@ -702,7 +711,7 @@ export const RegistroLealtad = ({ usuarioActual, alCerrarSesion }) => {
             </div>
           )}
 
-          {/* ======== FOOTER CON BOTONES ======== */}
+          {/* Footer con botones */}
           <div className="footer-formulario">
             <button
               type="submit"
